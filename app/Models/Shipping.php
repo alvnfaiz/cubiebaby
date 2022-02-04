@@ -15,8 +15,13 @@ class Shipping extends Model
         'cost',
     ];
 
+    //disable timestamps
+    public $timestamps = false;
+
     public function order()
     {
-        return $this->belongsTo(Order::class);
+        return $this->hasMany(Order::class);
     }
+
+
 }

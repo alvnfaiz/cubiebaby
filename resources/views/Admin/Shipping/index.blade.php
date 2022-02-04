@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container mx-auto mt-20">
-        <a href="{{  route('admin.category.create') }}"><button class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-sky-600">Tambah Produk</button></a>
+        <a href="{{  route('admin.shipping.create') }}"><button class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-sky-600">Tambah Ongkir</button></a>
             <div class="flex flex-col mt-6">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                   <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
@@ -12,13 +12,13 @@
                             
                             <tr>
                                 <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                                    Nama Kategori
+                                    Kota
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                                    Slug
+                                    Ongkos Kirim
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                                    Banyak Produk
+                                    Banyak Order
                                 </th>
                                 <th scope="col" class="relative px-6 py-3">
                                 <span class="sr-only">Edit</span>
@@ -29,7 +29,7 @@
                              @php
                                  $i=1
                              @endphp
-                            @foreach ($categories as $category)
+                            @foreach ($shippings as $shipping)
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="flex items-center">
@@ -38,22 +38,22 @@
                                         </div>
                                         <div class="ml-4">
                                         <div class="text-sm font-medium text-gray-900">
-                                            {{ $category->name }}
+                                            {{ $shipping->city }}
                                         </div>
                                         
                                         </div>
                                     </div>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <div class="text-sm text-gray-900">{{ $category->slug }}</div>
+                                        <div class="text-sm text-gray-900">{{ $shipping->cost }}</div>
                                     </td>
 
                                     <td class="px-6 py-4">
-                                        <div class="text-sm text-gray-900">{{ $category->product->count() }}</div>
+                                        <div class="text-sm text-gray-900">{{ $shipping->order->count() }}</div>
                                     </td>
                                     
                                     <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
-                                    <a href="{{ route('admin.category.edit', $category->id) }}" class="text-indigo-600 hover:text-blue-400">Edit</a>
+                                    <a href="{{ route('admin.shipping.edit', $shipping->id) }}" class="text-indigo-600 hover:text-blue-400">Edit</a>
                                     <a href="#" class="ml-8 text-red-600 hover:text-red-400">Edit</a>
                                     </td>
                                 </tr>

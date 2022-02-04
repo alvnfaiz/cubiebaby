@@ -59,17 +59,9 @@ class HomeController extends Controller
         $message = $this->getMessageCount($id);
         $report = $this->getReportCount($id);
         $cart_count = $this->getCartCount($id);
-
-        //if user is not logged in, get cache cart
-        if(!auth()->check()){
-            $cart = Cache::get('cart');
-            $product = Product::whereIn('id', $cart)->get();
-            return view('cart-guest-', compact('product', 'message', 'report', 'cart_count', 'cart'));
-        }else{
-            $cart = Cart::where('user_id', $id)->get();
-        }
-
-        return view('cart', compact('message', 'report', 'cart_count', 'cart'));
+        $total_price = $this->getTotalPrice();
+        $cart = Cart::where('user_id', $id)->get();
+        return view('cart', compact('message', 'report', 'cart_count', 'cart','total_price'));
     }
 
     public function addCart(Request $request){
@@ -180,6 +172,7 @@ class HomeController extends Controller
             'message' => 'Product added to cart',
             'total_product' => 1,
             'price'=> $price->price,
+            'total_price' => $this->getTotalPrice(),
         ]);
     }
 
@@ -224,6 +217,7 @@ class HomeController extends Controller
             'id_product' => $request->product_id,
             'total_product' => $request->qty,
             'price'=> $price->price,
+            'total_price' => $this->getTotalPrice(),
         ]);
     }
 
@@ -274,7 +268,14 @@ class HomeController extends Controller
         ]);
     }
 
-    public function getTotalPrice($id){
-    
+    public function getTotalPrice(){
+        $id = auth()->user()->id;
+        $cart = Cart::where('user_id', auth()->user()->id)->get();
+        $total = 0;
+        foreach($cart as $item){
+            $price = Product::where('id', $item->product_id)->first();
+            $total += $item->total_product * $price->price;
+        }
+        return $total;
     }
 }

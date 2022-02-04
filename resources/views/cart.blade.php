@@ -54,10 +54,10 @@
       </div>
 
       <div id="summary" class="w-1/4 px-8 py-10">
-        <h1 class="font-semibold text-2xl border-b pb-8">Order Summary</h1>
+        <h1 class="font-semibold text-2xl border-b pb-8">Detail Order Anda</h1>
         <div class="flex justify-between mt-10 mb-5">
-          <span class="font-semibold text-sm uppercase">Items 3</span>
-          <span class="font-semibold text-sm">590$</span>
+          <span class="font-semibold text-sm uppercase">Total Harga</span>
+          <span class="font-semibold text-sm" id="total-harga">Rp. {{ number_format($total_price,2,',','.') }}</span>
         </div>
         <div>
           <label class="font-medium inline-block mb-3 text-sm uppercase">Shipping</label>
@@ -109,6 +109,7 @@
                     console.log(data);
                     $('#'+id).val(data.total_product);
                     $('#total-price-'+id).text(new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(data.price*data.total_product));
+                    $('#total-harga').text(new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(data.total_price));
                 }
             });
         }

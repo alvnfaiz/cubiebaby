@@ -32,7 +32,7 @@ class Order extends Model
 
     public function shipping()
     {
-        return $this->belongsTo(Shipping::class);
+        return $this->belongsTo(Shipping::class, 'shipping_id');
     }
 
     public function destination()

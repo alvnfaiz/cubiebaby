@@ -7,6 +7,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\Auth\LoginController;
 
 /*
@@ -43,8 +44,8 @@ Route::get('/profile', [MemberController::class, 'index'])->middleware('member')
 
 //Pegawai Area
 Route::get('/admin', [AdminController::class, 'index'])->middleware('pegawai')->name('dashboard');
-Route::middleware('pegawai')->prefix('/admin')->name('admin.')->group(function(){
 
+Route::middleware('pegawai')->prefix('/admin')->name('admin.')->group(function(){
     Route::prefix('/product')->name('product.')->group(function(){
         Route::get('/', [ProductController::class, 'index'])->name('index');
         Route::get('/create', [ProductController::class, 'create'])->name('create');
@@ -79,8 +80,26 @@ Route::middleware('pegawai')->prefix('/admin')->name('admin.')->group(function()
 });
 
 //Admin Area
+Route::middleware('admin')->prefix('/admin')->name('admin.')->group(function(){
+    Route::prefix('/pegawai')->name('pegawai.')->group(function(){
+        Route::get('/', [PegawaiController::class, 'index'])->name('index');
+        Route::get('/create', [PegawaiController::class, 'create'])->name('create');
+        Route::post('/create', [PegawaiController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [PegawaiController::class, 'edit'])->name('edit');
+        Route::put('/{id}/edit', [PegawaiController::class, 'update'])->name('update');
+        Route::post('/{id}/delete', [PegawaiController::class, 'delete'])->name('delete');
+    });
 
-
+    // shipping
+    Route::prefix('/shipping')->name('shipping.')->group(function(){
+        Route::get('/', [ShippingController::class, 'index'])->name('index');
+        Route::get('/create', [ShippingController::class, 'create'])->name('create');
+        Route::post('/create', [ShippingController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [ShippingController::class, 'edit'])->name('edit');
+        Route::put('/{id}/edit', [ShippingController::class, 'update'])->name('update');
+        Route::post('/{id}/delete', [ShippingController::class, 'delete'])->name('delete');
+    });
+});
 
 //Front End User
 Route::get('/', [HomeController::class, 'index'])->name('home');

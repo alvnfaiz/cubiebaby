@@ -7,22 +7,36 @@ use App\Models\Message;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
     //
-    public function __construct()
+
+
+    protected function getInboxCount($id)
     {
-        $this->message = Message::select('*')
-            ->where('read', 0)
-            ->count();
-        $this->report = Report::where('status', 'open')
-            ->where('read', 0)
-            ->count();
-        $this->inbox = Message::select('*')
+        $inbox = Message::select('*')
             ->distinct()
             ->count('user_id');
+        return $inbox;
+    }
+
+    public function getReportCount($id)
+    {
+        $report = Report::where('status', 'open')
+            ->where('read', 0)
+            ->count();
+        return $report;
+    }
+
+    public function getMessageCount($id)
+    {
+        $message = Message::select('*')
+        ->where('read', 0)
+        ->count();
+        return $message;
     }
 
     protected function getCartCount($id)
@@ -35,9 +49,10 @@ class ProductController extends Controller
 
 
     public function index(){
-        $report = $this->report;
-        $message = $this->message;
-        $inbox = $this->inbox;
+        $id = Auth::user()->id;
+        $report = $this->getReportCount($id);
+        $message = $this->getMessageCount($id);
+        $inbox = $this->getInboxCount($id);
         $product = Product::latest();
         if(request('search')){
             $product = $product
@@ -52,9 +67,10 @@ class ProductController extends Controller
     }
 
     public function create(){
-        $report = $this->report;
-        $message = $this->message;
-        $inbox = $this->inbox;
+        $id = Auth::user()->id;
+        $report = $this->getReportCount($id);
+        $message = $this->getMessageCount($id);
+        $inbox = $this->getInboxCount($id);
         $category = Category::all();
         return view('Admin.Product.create', compact('category', 'report', 'message', 'inbox'));
     }
@@ -78,10 +94,11 @@ class ProductController extends Controller
         return redirect()->route('admin.product.index');
     }
 
-    public function edit($id){
-        $report = $this->report;
-        $message = $this->message;
-        $inbox = $this->inbox;
+    public function edit(Request $request){
+        $id = Auth::user()->id;
+        $report = $this->getReportCount($id);
+        $message = $this->getMessageCount($id);
+        $inbox = $this->getInboxCount($id);
         $category = Category::all();
         $product = Product::find($id);
         return view('Admin.Product.edit', compact('product', 'category', 'report', 'message', 'inbox'));
