@@ -3,7 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\BannersController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
@@ -39,8 +41,6 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 
 
-//Member Area
-Route::get('/profile', [MemberController::class, 'index'])->middleware('member')->name('member.profile');
 
 //Pegawai Area
 Route::get('/admin', [AdminController::class, 'index'])->middleware('pegawai')->name('dashboard');
@@ -80,7 +80,7 @@ Route::middleware('pegawai')->prefix('/admin')->name('admin.')->group(function()
 });
 
 //Admin Area
-Route::middleware('admin')->prefix('/admin')->name('admin.')->group(function(){
+Route::middleware('admin')->prefix('')->name('admin.')->group(function(){
     Route::prefix('/pegawai')->name('pegawai.')->group(function(){
         Route::get('/', [PegawaiController::class, 'index'])->name('index');
         Route::get('/create', [PegawaiController::class, 'create'])->name('create');
@@ -99,9 +99,19 @@ Route::middleware('admin')->prefix('/admin')->name('admin.')->group(function(){
         Route::put('/{id}/edit', [ShippingController::class, 'update'])->name('update');
         Route::post('/{id}/delete', [ShippingController::class, 'delete'])->name('delete');
     });
+
+    Route::prefix('/banner')->name('banner.')->group(function(){
+        Route::get('/', [BannersController::class, 'index'])->name('index');
+        Route::get('/create', [BannersController::class, 'create'])->name('create');
+        Route::post('/create', [BannersController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [BannersController::class, 'edit'])->name('edit');
+        Route::put('/{id}/edit', [BannersController::class, 'update'])->name('update');
+        Route::post('/{id}/delete', [BannersController::class, 'delete'])->name('delete');
+    });
 });
 
-//Front End User
+//Member Area
+Route::get('/profile', [MemberController::class, 'index'])->middleware('member')->name('member.profile');
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/home', [HomeController::class, 'index']);
 
@@ -119,3 +129,5 @@ Route::get('/api/cart', [HomeController::class, 'apiCart'])->name('api.cart');
 Route::post('/api/cart/add', [HomeController::class, 'apiAddCart'])->name('api.cart.add');
 Route::post('/api/cart/destroy', [HomeController::class, 'apiDestroyCart'])->name('api.cart.delete');
 Route::post('/api/cart/update', [HomeController::class, 'apiUpdateCart'])->name('api.cart.update');
+//api cart ship
+Route::post('/api/cart/ship', [HomeController::class, 'apiCostUpdate'])->name('api.cart.ship');

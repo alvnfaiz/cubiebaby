@@ -17,7 +17,6 @@ class Banners extends Migration
         Schema::create('banners', function (Blueprint $table) {
             $table->id();
             $table->string('image');
-            $table->string('link');
             $table->enum('status', ['active', 'inactive'])->default('inactive');
             $table->string('alt')->nullable();
         });

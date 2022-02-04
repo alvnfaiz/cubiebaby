@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Report;
 use App\Models\Message;
 use App\Models\Product;
+use App\Models\Shipping;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
@@ -60,8 +61,9 @@ class HomeController extends Controller
         $report = $this->getReportCount($id);
         $cart_count = $this->getCartCount($id);
         $total_price = $this->getTotalPrice();
+        $shipping = Shipping::all();
         $cart = Cart::where('user_id', $id)->get();
-        return view('cart', compact('message', 'report', 'cart_count', 'cart','total_price'));
+        return view('cart', compact('message', 'report', 'cart_count', 'cart','total_price', 'shipping'));
     }
 
     public function addCart(Request $request){
@@ -277,5 +279,31 @@ class HomeController extends Controller
             $total += $item->total_product * $price->price;
         }
         return $total;
+    }
+
+    public function apiShipUpdate(Request $request){
+        $id = auth()->user()->id;
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->address = $request->address;
+        $user->phone = $request->phone;
+        $user->save();
+        return response()->json([
+            'success' => true,
+            'message' => 'Ship updated',
+        ]);
+    }
+
+    public function apiCostUpdate(Request $request){
+        $id = auth()->user()->id;
+        $total_price = $this->getTotalPrice();
+        $ship_cost = Shipping::where('id', $request->cost)->first();
+        $cost = $ship_cost->cost;
+        $total_price += $cost;
+        return response()->json([
+            'success' => true,
+            'message' => 'Cost updated',
+            'total_price' => $total_price,
+        ]);
     }
 }

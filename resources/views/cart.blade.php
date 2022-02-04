@@ -61,16 +61,19 @@
         </div>
         <div>
           <label class="font-medium inline-block mb-3 text-sm uppercase">Shipping</label>
-          <select class="block p-2 text-gray-600 w-full text-sm">
-            <option>Standard shipping - $10.00</option>
+          <select class="block p-2 text-gray-600 w-full text-sm" onchange="shipUpdate()" id="cost">
+              <option disabled selected>Pilih Kota Pengiriman</option>
+            @foreach ($shipping as $ship)
+              <option value="{{ $ship->id }}">{{ $ship->city }} - {{ number_format($ship->cost,2,',','.') }}</option>
+            @endforeach
           </select>
         </div>
 
         <button class="bg-red-500 hover:bg-red-600 px-5 py-2 text-sm text-white uppercase">Apply</button>
         <div class="border-t mt-8">
           <div class="flex font-semibold justify-between py-6 text-sm uppercase">
-            <span>Total cost</span>
-            <span>$600</span>
+            <span>Total Bayar</span>
+            <span id="total-bayar">$600</span>
           </div>
           <button class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Checkout</button>
         </div>
@@ -124,6 +127,22 @@
                 success: function(data) {
                     console.log(data);
                     $('#cart-'+id).remove();
+                }
+            });
+        }
+
+        function shipUpdate() {
+            //get id cost value
+            var cost = $('#cost').val();
+            $.ajax({
+                url: "{{ route('api.cart.ship') }}",
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    cost: cost
+                },
+                success: function(data) {
+                    $('#total-bayar').text(new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(data.total_price));
                 }
             });
         }
