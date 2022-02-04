@@ -18,7 +18,7 @@ class Member
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Auth::user()->role == 'Member'){
+        if(isset(Auth::user()->role) == 'Member'){
             return $next($request);
         }
         return redirect(route('register'))->with('status', 'Anda harus login terlebih dahulu');

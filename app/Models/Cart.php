@@ -9,6 +9,9 @@ class Cart extends Model
 {
     use HasFactory;
 
+    //use table carts
+    protected $table = 'carts';
+
     protected $fillable = [
         'product_id',
         'user_id',

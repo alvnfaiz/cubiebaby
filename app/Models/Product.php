@@ -9,21 +9,24 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'name',
-        'description',
-        'price',
-        'capital',
-        'image',
-        'id_category',
-        'status',
-        'created_at',
-        'updated_at',
-    ];
+    // protected $fillable = [
+    //     'name',
+    //     'deskripsi',
+    //     'price',
+    //     'capital',
+    //     'image',
+    //     'id_category',
+    //     'status',
+    //     'stock',
+    //     'created_at',
+    //     'updated_at',
+    // ];
+
+    protected $guarded = ['id'];
 
 
     public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class, 'id_category');
     }
 }

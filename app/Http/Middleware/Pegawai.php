@@ -17,7 +17,7 @@ class Pegawai
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Auth::user()->role == 'Pegawai' || Auth::user()->role == 'Admin'){
+        if(isset(Auth::user()->role) == 'Pegawai' || isset(Auth::user()->role) == 'Admin'){
             return $next($request);
         }
         return  redirect('/')->with('status', 'Akses ke Halaman Admin Tidak Disetujui');

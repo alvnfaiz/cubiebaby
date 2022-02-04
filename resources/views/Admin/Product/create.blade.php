@@ -16,7 +16,7 @@
                                             Nama Produk
                                         </label>
                                         <div class="flex mt-1 shadow-sm">
-                                            <input type="text" name="name" id="name" class="flex-1 block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Nama Produk" value="{{ old('name') }}">
+                                            <input type="text" name="name" id="name" class="flex-1 block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2" placeholder="Nama Produk" value="{{ old('name') }}">
                                         </div>
                                         @error('name')
                                             <p class="mt-2 text-xs italic text-red-500">{{ $message }}</p>                                            
@@ -27,9 +27,20 @@
                                             Harga
                                         </label>
                                         <div class="flex mt-1 shadow-sm">
-                                            Rp.  <input type="number" step="any" name="price" id="price" class="flex-1 block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="120000"value="{{ old('price') }}">
+                                            Rp.  <input type="number" step="any" name="price" id="price" class="flex-1 block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2" placeholder="120000"value="{{ old('price') }}">
                                         </div>
                                         @error('price')
+                                            <p class="mt-2 text-xs italic text-red-500">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    <div class="col-span-3 sm:col-span-2">
+                                        <label for="capital" class="block text-sm font-medium text-gray-700">
+                                            Modal
+                                        </label>
+                                        <div class="flex mt-1 shadow-sm">
+                                            Rp.  <input type="number" step="any" name="capital" id="capital" class="flex-1 block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2" placeholder="120000"value="{{ old('capital') }}">
+                                        </div>
+                                        @error('capital')
                                             <p class="mt-2 text-xs italic text-red-500">{{ $message }}</p>
                                         @enderror
                                     </div>
@@ -38,7 +49,7 @@
                                             Stok
                                         </label>
                                         <div class="flex mt-1 shadow-sm">
-                                            <input type="number" name="stock" id="stock" class="flex-1 block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="500" value="{{ old('stock') }}">
+                                            <input type="number" name="stock" id="stock" class="flex-1 block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2" placeholder="500" value="{{ old('stock') }}">
                                         </div>
                                         @error('stock')
                                             <p class="mt-2 text-xs italic text-red-500">{{ $message }}</p>
@@ -46,10 +57,10 @@
                                         
                                     </div>
                                     <div class="col-span-3 sm:col-span-2">
-                                        <label for="categories_id" class="block text-sm font-medium text-gray-700">Kategori</label>
-                                        <select id="categories_id" name="categories_id" autocomplete="categories_id" class="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                        <label for="id_category" class="block text-sm font-medium text-gray-700">Kategori</label>
+                                        <select id="id_category" name="id_category" autocomplete="id_category" class="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                                             @foreach ($category as $cat)
-                                                @if(old('categories_id') == $cat->id)
+                                                @if(old('id_category') == $cat->id)
                                                     <option value="{{ $cat->id }}" selected>{{ $cat->name }}</option>
                                                 @else
                                                     <option value="{{ $cat->id }}">{{ $cat->name }}</option> 
@@ -57,7 +68,7 @@
                                             @endforeach
                                             
                                         </select>
-                                        @error('categories_id')
+                                        @error('id_category')
                                             <p class="mt-2 text-xs italic text-red-500">{{ $message }}</p>
                                         @enderror
                                         
@@ -77,7 +88,7 @@
                                             Deskripsi
                                         </label>
                                         <div class="mt-1">
-                                            <textarea id="deskripsi" name="deskripsi" rows="3" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">{{ old('deskripsi') }}</textarea>
+                                            <textarea id="deskripsi" name="deskripsi" rows="3" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-4">{{ old('deskripsi') }}</textarea>
                                         </div>
                                         <p class="mt-2 text-sm text-gray-500">
                                             Silahkan diisi deskripsi barang anda.

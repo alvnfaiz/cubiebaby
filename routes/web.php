@@ -39,7 +39,7 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 
 //Member Area
-
+Route::get('/profile', [MemberController::class, 'index'])->middleware('member')->name('member.profile');
 
 //Pegawai Area
 Route::get('/admin', [AdminController::class, 'index'])->middleware('pegawai')->name('dashboard');
@@ -51,7 +51,7 @@ Route::middleware('pegawai')->prefix('/admin')->name('admin.')->group(function()
         Route::post('/create', [ProductController::class, 'store'])->name('store');
         Route::get('/{id}/edit', [ProductController::class, 'edit'])->name('edit');
         Route::put('/{id}/edit', [ProductController::class, 'update'])->name('update');
-        Route::post('/{id}/delete', [ProductController::class, 'delete'])->name('delete');
+        Route::post('/{id}/delete', [ProductController::class, 'destroy'])->name('delete');
     });
 
     Route::prefix('/category')->name('category.')->group(function(){
@@ -86,8 +86,17 @@ Route::middleware('pegawai')->prefix('/admin')->name('admin.')->group(function()
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/home', [HomeController::class, 'index']);
 
-Route::get('/product/{id}', [HomeController::class, 'showBarang'])->name('productlist');
+Route::get('/product/{id}', [HomeController::class, 'showBarang'])->name('product.show');
 Route::get('/product', [HomeController::class, 'product'])->name('product');
-Route::get('/category/{id}', [HomeController::class, 'category'])->name('category');
-Route::get('/search', [HomeController::class, 'search'])->name('search');
+Route::get('/category/{id}', [HomeController::class, 'category'])->name('category.show');
+Route::get('/search', [HomeController::class, 'index'])->name('search');
 Route::get('/cart', [HomeController::class, 'cart'])->name('cart');
+//destroy cart
+Route::post('/cart/{id}/delete', [HomeController::class, 'destroyCart'])->name('cart.destroy');
+Route::post('/add', [HomeController::class, 'addCart'])->name('buy.add');
+
+//api to add cart
+Route::get('/api/cart', [HomeController::class, 'apiCart'])->name('api.cart');
+Route::post('/api/cart/add', [HomeController::class, 'apiAddCart'])->name('api.cart.add');
+Route::post('/api/cart/destroy', [HomeController::class, 'apiDestroyCart'])->name('api.cart.delete');
+Route::post('/api/cart/update', [HomeController::class, 'apiUpdateCart'])->name('api.cart.update');

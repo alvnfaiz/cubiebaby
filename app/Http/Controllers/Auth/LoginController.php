@@ -6,6 +6,7 @@ use App\Models\UserActivity;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class LoginController extends Controller
 {
@@ -34,6 +35,18 @@ class LoginController extends Controller
                     'order_count' => 0,
                 ]);
             }
+
+            //if cache cart exist, insert product to cart
+            if(Cache::has('cart'.$id)){
+                $cart = Cache::get('cart'.$id);
+                foreach($cart as $key => $value){
+                    $cart[$key]['user_id'] = $id;
+                }
+                Cart::insert($cart);
+                Cache::forget('cart'.$id);
+            }
+
+
             if($userAct != null){
                 UserActivity::where('user_id', $id)
                 ->update([

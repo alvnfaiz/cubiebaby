@@ -12,15 +12,23 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
+    public function __construct(){
+        $this->barang = Product::all()->count();
+        $this->id = isset(auth()->user()->id)?:0;
+        $this->message = Message::select('*')
+            ->where('read', 0)
+            ->count();
+        $this->report = Report::where('status', 'open')
+            ->where('read', 0)
+            ->count();
+    }
+
     //
     public function index(){
-        $barang = Product::all()->count();
-        $message = Message::select('*')
-            ->where('read', 0)
-            ->count();
-        $report = Report::where('status', 'open')
-            ->where('read', 0)
-            ->count();
+        $barang = $this->barang;
+        $id = $this->id;
+        $message = $this->message;
+        $report = $this->report;
         $inbox = Message::select('*')
             ->distinct()
             ->count('user_id');
