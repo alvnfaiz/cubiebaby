@@ -21,6 +21,7 @@ class Message extends Migration
             $table->string('image')->nullable();
             $table->string('message');
             $table->boolean('read')->default(false);
+            $table->boolean('admin')->default(false);
             $table->timestamp('created_at')->useCurrent();
         });
     }

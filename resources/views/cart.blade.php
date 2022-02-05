@@ -52,16 +52,18 @@
           Continue Shopping
         </a>
       </div>
-
-      <div id="summary" class="w-1/4 px-8 py-10">
+      <form action="{{ route('member.order.add') }}" method="POST" class="w-1/4 px-8 py-10">
+        @csrf
+      <div id="summary" class="">
         <h1 class="font-semibold text-2xl border-b pb-8">Detail Order Anda</h1>
         <div class="flex justify-between mt-10 mb-5">
           <span class="font-semibold text-sm uppercase">Total Harga</span>
           <span class="font-semibold text-sm" id="total-harga">Rp. {{ number_format($total_price,2,',','.') }}</span>
+          <input name="total" type="hidden" value="{{ $total_price }}">
         </div>
         <div>
           <label class="font-medium inline-block mb-3 text-sm uppercase">Shipping</label>
-          <select class="block p-2 text-gray-600 w-full text-sm" onchange="shipUpdate()" id="cost">
+          <select name="shipping_id" class="block p-2 text-gray-600 w-full text-sm" onchange="shipUpdate()" id="cost">
               <option disabled selected>Pilih Kota Pengiriman</option>
             @foreach ($shipping as $ship)
               <option value="{{ $ship->id }}">{{ $ship->city }} - {{ number_format($ship->cost,2,',','.') }}</option>
@@ -69,15 +71,19 @@
           </select>
         </div>
 
-        <button class="bg-red-500 hover:bg-red-600 px-5 py-2 text-sm text-white uppercase">Apply</button>
         <div class="border-t mt-8">
           <div class="flex font-semibold justify-between py-6 text-sm uppercase">
             <span>Total Bayar</span>
-            <span id="total-bayar">$600</span>
+            <span id="total-bayar">Rp. {{ number_format($total_price,2,',','.') }}</span>
           </div>
-          <button class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Checkout</button>
+          <input type="text" name="name" class="block p-2 text-gray-600 w-full text-sm" placeholder="Nama Penerima" required value="{{ old('name') }}">
+          <input type="text" name="phone" class="block p-2 text-gray-600 w-full text-sm" placeholder="Nomor Telepon" required value="{{ old('phone') }}" >
+          <input type="text" name="address" class="block p-2 text-gray-600 w-full text-sm" placeholder="Alamat Lengkap" required value="{{ old('address') }}" >
+            
+          <button type="submit" class="bg-red-500 hover:bg-red-600 px-5 py-2 text-sm text-white uppercase">Checkout</button>
         </div>
       </div>
+      </form>
 
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -126,6 +132,7 @@
                 },
                 success: function(data) {
                     console.log(data);
+                    shipUpdate();
                     $('#cart-'+id).remove();
                 }
             });
@@ -142,6 +149,7 @@
                     cost: cost
                 },
                 success: function(data) {
+                    //total
                     $('#total-bayar').text(new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(data.total_price));
                 }
             });

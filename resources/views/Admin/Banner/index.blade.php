@@ -15,10 +15,10 @@
                                     Gambar
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                                    Status
+                                    Alt Text
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                                    Alt Text
+                                    Status
                                 </th>
                                 <th scope="col" class="relative px-6 py-3">
                                 <span class="sr-only">Edit</span>
@@ -37,19 +37,19 @@
                                         <span>{{  $i++ }}</span>
                                         </div>
                                         <div class="ml-4">
-                                        <div class="text-sm font-medium text-gray-900">
-                                            {{ $banner->name }}
+                                        <div class="w-64">
+                                            <img src="{{ asset('storage/'.$banner->image) }}" alt="{{ $banner->alt_text }}" class="w-full">
                                         </div>
                                         
                                         </div>
                                     </div>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <div class="text-sm text-gray-900">{{ $banner->slug }}</div>
+                                        <div class="text-sm text-gray-900">{{ $banner->alt }}</div>
                                     </td>
 
                                     <td class="px-6 py-4">
-                                        <div class="text-sm text-gray-900">{{ $banner->product->count() }}</div>
+                                        <div class="text-sm text-gray-900">{{ $banner->status }}</div>
                                     </td>
                                     
                                     <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">

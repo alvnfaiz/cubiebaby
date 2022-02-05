@@ -42,4 +42,13 @@ class User extends Authenticatable
     {
         return $this->hasMany(Order::class);
     }
+
+    public function latestMessage() 
+    {
+        return $this->hasOne(Message::class, 'user_id')->latest();
+    }
+
+    public function messages(){
+        return $this->hasMany(Message::class, 'user_id');
+    }
 }

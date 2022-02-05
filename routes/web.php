@@ -3,14 +3,19 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\BannersController;
+use App\Http\Controllers\BotChatController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\UserMessageController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -64,10 +69,22 @@ Route::middleware('pegawai')->prefix('/admin')->name('admin.')->group(function()
         Route::post('/{id}/delete', [CategoryController::class, 'delete'])->name('delete');
     });
 
+    Route::prefix('/order')->name('order.')->group(function(){
+        Route::get('/', [OrderController::class, 'indexAdmin'])->name('index');
+        Route::get('/proses', [OrderController::class, 'proses'])->name('proses');
+        Route::get('/cancel', [OrderController::class, 'cancel'])->name('cancel');
+        Route::get('/selesai', [OrderController::class, 'selesai'])->name('selesai');
+        Route::get('/{id}/edit', [OrderController::class, 'edit'])->name('edit');
+        Route::put('/{id}/update', [OrderController::class, 'update'])->name('update');
+    });
+
     Route::prefix('/message')->name('message.')->group(function(){
         Route::get('/', [MessageController::class, 'index'])->name('index');
-        Route::get('/{id}', [MessageController::class, 'create'])->name('create');
-        Route::post('/{id}', [MessageController::class, 'store'])->name('store');
+        Route::post('/api', [MessageController::class, 'apiGetMessage'])->name('get');  
+        Route::post('/send', [MessageController::class, 'apiSendMessage'])->name('send');        
+        Route::post('/api/new', [MessageController::class, 'apiGetNewMessage'])->name('list');
+        // Route::post(''
+
     });
 
     Route::prefix('/report')->name('report.')->group(function(){
@@ -108,18 +125,38 @@ Route::middleware('admin')->prefix('')->name('admin.')->group(function(){
         Route::put('/{id}/edit', [BannersController::class, 'update'])->name('update');
         Route::post('/{id}/delete', [BannersController::class, 'delete'])->name('delete');
     });
+
+    Route::prefix('/botchat')->name('botchat.')->group(function(){
+        Route::get('/', [BotChatController::class, 'index'])->name('index');
+        Route::get('/create', [BotChatController::class, 'create'])->name('create');
+        Route::post('/create', [BotChatController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [BotChatController::class, 'edit'])->name('edit');
+        Route::put('/{id}/edit', [BotChatController::class, 'update'])->name('update');
+        Route::post('/{id}/delete', [BotChatController::class, 'delete'])->name('delete');
+    });
+
+
 });
 
 //Member Area
 Route::get('/profile', [MemberController::class, 'index'])->middleware('member')->name('member.profile');
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/home', [HomeController::class, 'index']);
+Route::get('/message', [UserMessageController::class, 'index'])->middleware('member')->name('message');
+Route::post('/api/message', [UserMessageController::class, 'apiSend'])->middleware('member')->name('message.send');
+Route::post('/api/message/list', [UserMessageController::class, 'apiGetNewMessage'])->middleware('member')->name('message.get');
+Route::post('/order/add', [OrderController::class, 'store'])->middleware('member')->name('member.order.add');
+Route::get('/order', [OrderController::class, 'index'])->middleware('member')->name('member.order.index');
+Route::get('/order/{id}', [OrderController::class, 'detail'])->middleware('member')->name('member.order.detail');
+
 
 Route::get('/product/{id}', [HomeController::class, 'showBarang'])->name('product.show');
 Route::get('/product', [HomeController::class, 'product'])->name('product');
-Route::get('/category/{id}', [HomeController::class, 'category'])->name('category.show');
+Route::get('/category/{slug}', [HomeController::class, 'category'])->name('category.show');
 Route::get('/search', [HomeController::class, 'index'])->name('search');
 Route::get('/cart', [HomeController::class, 'cart'])->name('cart');
+
+
 //destroy cart
 Route::post('/cart/{id}/delete', [HomeController::class, 'destroyCart'])->name('cart.destroy');
 Route::post('/add', [HomeController::class, 'addCart'])->name('buy.add');

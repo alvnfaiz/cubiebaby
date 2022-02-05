@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Banner;
+use App\Models\Report;
+use App\Models\Message;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BannersController extends Controller
 {
@@ -30,7 +34,7 @@ class BannersController extends Controller
             'alt_text' => 'required|string|max:255',
         ]);
         $banner = new Banner;
-        $banner->alt_text = $request->alt_text;
+        $banner->alt = $request->alt_text;
         if($request->hasFile('image')){
             $imageName = time().'.'.$request->image->extension();  
             $banner['image'] = $request->file('image')->store('banners');
@@ -61,7 +65,7 @@ class BannersController extends Controller
             $imageName = time().'.'.$request->image->extension();  
             $banner['image'] = $request->file('image')->store('banners');
         }
-        $banner->alt_text = $request->alt_text;
+        $banner->alt = $request->alt_text;
         $banner->status = $request->status;
         $banner->save();
         return redirect()->route('admin.banner.index');

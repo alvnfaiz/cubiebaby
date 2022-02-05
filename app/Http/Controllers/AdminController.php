@@ -9,26 +9,18 @@ use App\Models\Message;
 use App\Models\Product;
 use App\Models\OrderDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
-    public function __construct(){
-        $this->barang = Product::all()->count();
-        $this->id = isset(auth()->user()->id)?:0;
-        $this->message = Message::select('*')
-            ->where('read', 0)
-            ->count();
-        $this->report = Report::where('status', 'open')
-            ->where('read', 0)
-            ->count();
-    }
+
 
     //
     public function index(){
-        $barang = $this->barang;
-        $id = $this->id;
-        $message = $this->message;
-        $report = $this->report;
+        $id = Auth::check()?Auth::user()->id:0;
+        $barang = Product::all()->count();
+        $message = $this->getMessageCount();
+        $report = $this->getReportCount();
         $inbox = Message::select('*')
             ->distinct()
             ->count('user_id');
@@ -78,6 +70,38 @@ class AdminController extends Controller
 
     public function settings(){
 
+    }
+
+    protected function getCartCount($id = 0){
+        if($id == 0){
+            $cart = Cache::get('cart');
+            if(!$cart){
+                return 0;
+            }
+            return count($cart);
+        }else{
+            $cart = Cart::where('user_id', $id)->get();
+            if(!$cart){
+                return 0;
+            }
+            return count($cart);
+        }
+    }
+
+    public function getReportCount()
+    {
+        $report = Report::where('status', 'open')
+            ->where('read', 0)
+            ->count();
+        return $report;
+    }
+
+    public function getMessageCount()
+    {
+        $message = Message::select('*')
+        ->where('read', 0)
+        ->count();
+        return $message;
     }
 
 }

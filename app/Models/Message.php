@@ -14,6 +14,7 @@ class Message extends Model
         'image',
         'message',
         'read',
+        'admin',
         'created_at',
     ];
 

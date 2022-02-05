@@ -27,8 +27,9 @@
             <a class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 rounded-lg hover:text-gray-900 {{ (request()->is('admin/category*')) ? 'bg-gray-200' : 'bg-transparent hover:bg-gray-200' }}" href="{{ route('admin.category.index') }}">Kategori</a>
             <a class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 rounded-lg hover:text-gray-900 {{ (request()->is('admin/message*')) ? 'bg-gray-200' : 'bg-transparent hover:bg-gray-200' }}" href="{{ route('admin.message.index') }}">Pesan</a>
             <a class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 rounded-lg hover:text-gray-900 {{ (request()->is('admin/shipping*')) ? 'bg-gray-200' : 'bg-transparent hover:bg-gray-200' }}" href="{{ route('admin.shipping.index') }}">Ongkir</a>
-            <a class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 rounded-lg hover:text-gray-900 {{ (request()->is('admin/shipping*')) ? 'bg-gray-200' : 'bg-transparent hover:bg-gray-200' }}" href="{{ route('admin.pegawai.index') }}">Pegawai</a>
-            <a class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 rounded-lg hover:text-gray-900 {{ (request()->is('admin/botchat*')) ? 'bg-gray-200' : 'bg-transparent hover:bg-gray-200' }}" href="{{ route('home') }}">BotChat</a>
+            <a class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 rounded-lg hover:text-gray-900 {{ (request()->is('admin/pegawai*')) ? 'bg-gray-200' : 'bg-transparent hover:bg-gray-200' }}" href="{{ route('admin.pegawai.index') }}">Pegawai</a>
+            <a class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 rounded-lg hover:text-gray-900 {{ (request()->is('admin/banner*')) ? 'bg-gray-200' : 'bg-transparent hover:bg-gray-200' }}" href="{{ route('admin.banner.index') }}">Banner</a>
+            <a class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 rounded-lg hover:text-gray-900 {{ (request()->is('admin/botchat*')) ? 'bg-gray-200' : 'bg-transparent hover:bg-gray-200' }}" href="{{ route('admin.botchat.index') }}">BotChat</a>
             <div @click.away="open = false" class="relative" x-data="{ open: false }">
                 <button @click="open = !open" class="flex flex-row items-center w-full px-4 py-2 mt-2 text-sm font-semibold text-left bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 md:block hover:text-gray-900 hover:bg-gray-200 ">
                 <span>Order</span>
@@ -36,13 +37,13 @@
                 </button>
                 <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute right-0 w-full mt-2 origin-top-right rounded-md shadow-lg">
                 <div class="px-2 py-2 bg-white rounded-md shadow dark-mode:bg-gray-800">
-                    <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900 hover:bg-gray-200 " href="{{ route('home') }}">Diproses</a>
-                    <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900 hover:bg-gray-200 " href="{{ route('home') }}">Batal/Expired</a>
-                    <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900 hover:bg-gray-200 " href="{{ route('home') }}">Selesai</a>
+                    <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900 hover:bg-gray-200 " href="{{ route('admin.order.index') }}">Selesai</a>
+                    <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900 hover:bg-gray-200 " href="{{ route('admin.order.proses') }}">Diproses</a>
+                    <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900 hover:bg-gray-200 " href="{{ route('admin.order.cancel') }}">Batal/Expired</a>
+                    <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900 hover:bg-gray-200 " href="{{ route('admin.order.selesai') }}">Selesai</a>
                 </div>
                 </div>
             </div>
-            <a class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 rounded-lg hover:text-gray-900 {{ (request()->is('admin/')) ? 'bg-gray-200' : 'bg-transparent hover:bg-gray-200' }}" href="{{ route('home') }}">Pengaturan</a>
             </nav>
         </div>
         <div class="w-full">
@@ -54,9 +55,9 @@
                             <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
                             <span id="notif-count" class="absolute top-2 px-1.5 py-0.5 bg-green-500 rounded-full text-xs text-white opacity-50 group-hover:opacity-100">{{ $report }}</span>
                         </a>
-                        <a href="" class="group">
+                        <a href="{{ route('admin.message.index') }}" class="group">
                             <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
-                            <span id="notif-count" class="absolute top-2 px-1.5 py-0.5 bg-green-500 rounded-full text-xs text-white opacity-50 group-hover:opacity-100">{{ $report }}</span>
+                            <span id="notif-count" class="absolute top-2 px-1.5 py-0.5 bg-green-500 rounded-full text-xs text-white opacity-50 group-hover:opacity-100">{{ $message}}</span>
                         </a>   
                     </div>
                     <div class="flex flex-row items-center">

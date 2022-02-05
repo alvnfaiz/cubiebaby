@@ -54,7 +54,7 @@ class LoginController extends Controller
                     'login_count' => UserActivity::where('user_id', $id)->value('login_count') + 1,
                 ]);
             }     
-            return redirect()->intended('dashboard');
+            return redirect()->intended('/');
         }
 
         return back()->withErrors([

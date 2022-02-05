@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Report;
+use App\Models\BotChat;
+use App\Models\Message;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BotChatController extends Controller
 {
@@ -12,7 +16,7 @@ class BotChatController extends Controller
         $report = $this->getReportCount($id);
         $message = $this->getMessageCount($id);
         $inbox = $this->getInboxCount($id);
-        $chats = BotChat::all();
+        $chats = BotChat::paginate(50);
         return view('Admin.botchat.index', compact('chats', 'message', 'report', 'inbox'));
     }
 
@@ -25,12 +29,12 @@ class BotChatController extends Controller
     }
 
     public function store(Request $request){
+        //reply from ckeditor
         $this->validate($request, [
             'message' => 'required|string|max:255',
             'reply' => 'required|string|max:255',
             'status' => 'required|string|max:255',
         ]);
-
         BotChat::create([
             'message' => $request->message,
             'reply' => $request->reply,
@@ -44,8 +48,8 @@ class BotChatController extends Controller
         $report = $this->getReportCount($id);
         $message = $this->getMessageCount($id);
         $inbox = $this->getInboxCount($id);
-        $chat = BotChat::where('id', $request->id)->first();
-        return view('Admin.botchat.edit', compact('chat', 'report', 'message', 'inbox'));
+        $bot = BotChat::where('id', $request->id)->first();
+        return view('Admin.botchat.edit', compact('bot', 'report', 'message', 'inbox'));
     }
 
     public function update(Request $request){
@@ -68,19 +72,28 @@ class BotChatController extends Controller
         return redirect()->route('admin.botchat.index');
     }
 
-    public function getReportCount($id){
-        $report = Report::where('user_id', $id)->count();
+    protected function getInboxCount($id)
+    {
+        $inbox = Message::select('*')
+            ->distinct()
+            ->count('user_id');
+        return $inbox;
+    }
+
+    public function getReportCount($id)
+    {
+        $report = Report::where('status', 'open')
+            ->where('read', 0)
+            ->count();
         return $report;
     }
 
-    public function getMessageCount($id){
-        $message = Message::where('user_id', $id)->count();
+    public function getMessageCount($id)
+    {
+        $message = Message::select('*')
+        ->where('read', 0)
+        ->count();
         return $message;
-    }
-
-    public function getInboxCount($id){
-        $inbox = Inbox::where('user_id', $id)->count();
-        return $inbox;
     }
 
     

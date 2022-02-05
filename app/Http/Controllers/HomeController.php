@@ -48,7 +48,10 @@ class HomeController extends Controller
 
     public function category(Request $request){
         $id = isset(auth()->user()->id)?auth()->user()->id:0;
-        $barangs = Product::where('id_category', $request->id)->get();
+        //product from category slug
+        $barangs = Product::whereHas('category', function($query) use ($request){
+            $query->where('slug', $request->slug);
+        })->paginate(12);
         $message = $this->getMessageCount($id);
         $report = $this->getReportCount($id);
         $cart_count = $this->getCartCount($id);

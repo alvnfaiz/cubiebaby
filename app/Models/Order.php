@@ -24,6 +24,9 @@ class Order extends Model
         'updated_at',
     ];
 
+    public function detail(){
+        return $this->hasMany(OrderDetail::class);
+    }
 
     public function user()
     {
