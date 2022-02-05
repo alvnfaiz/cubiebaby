@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Order;
-use App\Models\Report;
 use App\Models\Message;
 use App\Models\Product;
 use App\Models\OrderDetail;
@@ -20,7 +19,6 @@ class AdminController extends Controller
         $id = Auth::check()?Auth::user()->id:0;
         $barang = Product::all()->count();
         $message = $this->getMessageCount();
-        $report = $this->getReportCount();
         $inbox = Message::select('*')
             ->distinct()
             ->count('user_id');
@@ -60,7 +58,7 @@ class AdminController extends Controller
         
         return view(
             'admin.index', 
-            compact('barang', 'message', 'report', 'inbox', 'sold', 'order', 'finish_order', 'cancel_order', 'shipping_order', 'userCount', 'potential', 'lastOrder', 'User'));
+            compact('barang', 'message', 'inbox', 'sold', 'order', 'finish_order', 'cancel_order', 'shipping_order', 'userCount', 'potential', 'lastOrder', 'User'));
     }
 
 
@@ -86,14 +84,6 @@ class AdminController extends Controller
             }
             return count($cart);
         }
-    }
-
-    public function getReportCount()
-    {
-        $report = Report::where('status', 'open')
-            ->where('read', 0)
-            ->count();
-        return $report;
     }
 
     public function getMessageCount()

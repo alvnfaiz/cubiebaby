@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Report;
+
 use App\Models\BotChat;
 use App\Models\Message;
 use Illuminate\Http\Request;
@@ -13,11 +13,10 @@ class UserMessageController extends Controller
     //
     public function index(){
         $id = Auth::user()->id;
-        $report = $this->getReportCount($id);
+        
         $message = $this->getMessageCount($id);
-        $cart_count = $this->getReportCount($id);
         $chats = Message::where('user_id', $id)->get();
-        return view('Member.pesan.index', compact('chats', 'message', 'report', 'cart_count'));
+        return view('Member.pesan.index', compact('chats', 'message', 'cart_count'));
     }
 
     public function adminMessageUpdate(Request $request){
@@ -107,13 +106,7 @@ class UserMessageController extends Controller
         }
     }
 
-    public function getReportCount($id)
-    {
-        $report = Report::where('status', 'open')
-            ->where('read', 0)
-            ->count();
-        return $report;
-    }
+
 
     public function getMessageCount($id)
     {

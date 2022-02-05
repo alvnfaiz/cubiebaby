@@ -20,14 +20,13 @@
                     <div class="w-1/2 flex flex-col">
                         <form action="{{ route('cart') }}" method="POST">
                             @csrf
-                            //total pembelian
 
                             <input type="hidden" name="id" value="{{ $barang->id }}">
                             <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                 Add to Cart
                             </button>
                         </form>
-                        <form action="{{ route('cart.add') }}" method="POST">
+                        <form action="{{ route('buy.add') }}" method="POST">
                             @csrf
                             <input type="hidden" name="id" value="{{ $barang->id }}">
                             <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">

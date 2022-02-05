@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Report;
+
 use App\Models\BotChat;
 use App\Models\Message;
 use Illuminate\Http\Request;
@@ -13,19 +13,19 @@ class BotChatController extends Controller
     //
     public function index(){
         $id = Auth::user()->id;
-        $report = $this->getReportCount($id);
+        
         $message = $this->getMessageCount($id);
         $inbox = $this->getInboxCount($id);
         $chats = BotChat::paginate(50);
-        return view('Admin.botchat.index', compact('chats', 'message', 'report', 'inbox'));
+        return view('Admin.botchat.index', compact('chats', 'message', 'inbox'));
     }
 
     public function create(){
         $id = Auth::user()->id;
-        $report = $this->getReportCount($id);
+        
         $message = $this->getMessageCount($id);
         $inbox = $this->getInboxCount($id);
-        return view('Admin.botchat.create', compact('report', 'message', 'inbox'));
+        return view('Admin.botchat.create', compact( 'message', 'inbox'));
     }
 
     public function store(Request $request){
@@ -45,11 +45,11 @@ class BotChatController extends Controller
 
     public function edit(Request $request){
         $id = Auth::user()->id;
-        $report = $this->getReportCount($id);
+        
         $message = $this->getMessageCount($id);
         $inbox = $this->getInboxCount($id);
         $bot = BotChat::where('id', $request->id)->first();
-        return view('Admin.botchat.edit', compact('bot', 'report', 'message', 'inbox'));
+        return view('Admin.botchat.edit', compact('bot', 'message', 'inbox'));
     }
 
     public function update(Request $request){
@@ -80,13 +80,6 @@ class BotChatController extends Controller
         return $inbox;
     }
 
-    public function getReportCount($id)
-    {
-        $report = Report::where('status', 'open')
-            ->where('read', 0)
-            ->count();
-        return $report;
-    }
 
     public function getMessageCount($id)
     {

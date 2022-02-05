@@ -84,27 +84,26 @@ Route::middleware('pegawai')->prefix('/admin')->name('admin.')->group(function()
         Route::post('/send', [MessageController::class, 'apiSendMessage'])->name('send');        
         Route::post('/api/new', [MessageController::class, 'apiGetNewMessage'])->name('list');
         // Route::post(''
-
-    });
-
-    Route::prefix('/report')->name('report.')->group(function(){
-        Route::get('/', [ReportController::class, 'index'])->name('index');
-        Route::get('/{id}', [ReportController::class, 'create'])->name('create');
-        Route::post('/{id}', [ReportController::class, 'store'])->name('store');
-        Route::post('/{id}/delete', [ReportController::class, 'delete'])->name('delete');
     });
 
 });
 
 //Admin Area
 Route::middleware('admin')->prefix('')->name('admin.')->group(function(){
-    Route::prefix('/pegawai')->name('pegawai.')->group(function(){
-        Route::get('/', [PegawaiController::class, 'index'])->name('index');
-        Route::get('/create', [PegawaiController::class, 'create'])->name('create');
-        Route::post('/create', [PegawaiController::class, 'store'])->name('store');
-        Route::get('/{id}/edit', [PegawaiController::class, 'edit'])->name('edit');
-        Route::put('/{id}/edit', [PegawaiController::class, 'update'])->name('update');
-        Route::post('/{id}/delete', [PegawaiController::class, 'delete'])->name('delete');
+    // Route::prefix('/pegawai')->name('pegawai.')->group(function(){
+    //     Route::get('/', [PegawaiController::class, 'index'])->name('index');
+    //     Route::get('/create', [PegawaiController::class, 'create'])->name('create');
+    //     Route::post('/create', [PegawaiController::class, 'store'])->name('store');
+    //     Route::get('/{id}/edit', [PegawaiController::class, 'edit'])->name('edit');
+    //     Route::put('/{id}/edit', [PegawaiController::class, 'update'])->name('update');
+    //     Route::post('/{id}/delete', [PegawaiController::class, 'delete'])->name('delete');
+    // });
+
+    Route::prefix('/report')->name('report.')->group(function(){
+        
+        Route::get('/', [ReportController::class, 'index'])->name('index');
+        Route::get('/{id}', [ReportController::class, 'create'])->name('create');
+        Route::post('/{id}', [ReportController::class, 'store'])->name('store');
     });
 
     // shipping
@@ -145,6 +144,8 @@ Route::get('/home', [HomeController::class, 'index']);
 Route::get('/message', [UserMessageController::class, 'index'])->middleware('member')->name('message');
 Route::post('/api/message', [UserMessageController::class, 'apiSend'])->middleware('member')->name('message.send');
 Route::post('/api/message/list', [UserMessageController::class, 'apiGetNewMessage'])->middleware('member')->name('message.get');
+
+//Order
 Route::post('/order/add', [OrderController::class, 'store'])->middleware('member')->name('member.order.add');
 Route::get('/order', [OrderController::class, 'index'])->middleware('member')->name('member.order.index');
 Route::get('/order/{id}', [OrderController::class, 'detail'])->middleware('member')->name('member.order.detail');

@@ -13,7 +13,7 @@
     <div class="md:flex flex-col md:flex-row md:min-h-screen w-full absolute">
         <div @click.away="open = false" class="flex flex-col w-full md:w-64 text-gray-700 bg-white dark-mode:text-gray-200 dark-mode:bg-gray-800 flex-shrink-0" x-data="{ open: false }">
             <div class="flex-shrink-0 px-8 py-4 flex flex-row items-center justify-between">
-            <a href="#" class="text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline">CubieBaby</a>
+            <a href="{{ route('home') }}" class="text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline">CubieBaby</a>
             <button class="rounded-lg md:hidden rounded-lg focus:outline-none focus:shadow-outline" @click="open = !open">
                 <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
                 <path x-show="!open" fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z" clip-rule="evenodd"></path>
@@ -27,7 +27,6 @@
             <a class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 rounded-lg hover:text-gray-900 {{ (request()->is('admin/category*')) ? 'bg-gray-200' : 'bg-transparent hover:bg-gray-200' }}" href="{{ route('admin.category.index') }}">Kategori</a>
             <a class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 rounded-lg hover:text-gray-900 {{ (request()->is('admin/message*')) ? 'bg-gray-200' : 'bg-transparent hover:bg-gray-200' }}" href="{{ route('admin.message.index') }}">Pesan</a>
             <a class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 rounded-lg hover:text-gray-900 {{ (request()->is('admin/shipping*')) ? 'bg-gray-200' : 'bg-transparent hover:bg-gray-200' }}" href="{{ route('admin.shipping.index') }}">Ongkir</a>
-            <a class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 rounded-lg hover:text-gray-900 {{ (request()->is('admin/pegawai*')) ? 'bg-gray-200' : 'bg-transparent hover:bg-gray-200' }}" href="{{ route('admin.pegawai.index') }}">Pegawai</a>
             <a class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 rounded-lg hover:text-gray-900 {{ (request()->is('admin/banner*')) ? 'bg-gray-200' : 'bg-transparent hover:bg-gray-200' }}" href="{{ route('admin.banner.index') }}">Banner</a>
             <a class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 rounded-lg hover:text-gray-900 {{ (request()->is('admin/botchat*')) ? 'bg-gray-200' : 'bg-transparent hover:bg-gray-200' }}" href="{{ route('admin.botchat.index') }}">BotChat</a>
             <div @click.away="open = false" class="relative" x-data="{ open: false }">
@@ -51,10 +50,6 @@
                 <div class="container flex flex-row justify-between mx-auto">
                     <div class="flex flex-row p-4 space-x-8">
                         <a href="{{ route('member.profile') }}" class="text-sky-600 hover:text-blue-600 mx-6"> {{ auth()->user()->email}} </a>
-                        <a href="" class="group">
-                            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
-                            <span id="notif-count" class="absolute top-2 px-1.5 py-0.5 bg-green-500 rounded-full text-xs text-white opacity-50 group-hover:opacity-100">{{ $report }}</span>
-                        </a>
                         <a href="{{ route('admin.message.index') }}" class="group">
                             <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
                             <span id="notif-count" class="absolute top-2 px-1.5 py-0.5 bg-green-500 rounded-full text-xs text-white opacity-50 group-hover:opacity-100">{{ $message}}</span>

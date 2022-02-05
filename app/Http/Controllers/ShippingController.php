@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Report;
+
 use App\Models\Message;
 use App\Models\Shipping;
 use Illuminate\Http\Request;
@@ -13,19 +13,19 @@ class ShippingController extends Controller
     //
     public function index(){
         $id = Auth::user()->id;
-        $report = $this->getReportCount($id);
+        
         $message = $this->getMessageCount($id);
         $inbox = $this->getInboxCount($id);
         $shippings = Shipping::all();
-        return view('Admin.shipping.index', compact('shippings', 'message', 'report', 'inbox'));
+        return view('Admin.shipping.index', compact('shippings', 'message', 'inbox'));
     }
 
     public function create(){
         $id = Auth::user()->id;
-        $report = $this->getReportCount($id);
+        
         $message = $this->getMessageCount($id);
         $inbox = $this->getInboxCount($id);
-        return view('Admin.shipping.create', compact('report', 'message', 'inbox'));
+        return view('Admin.shipping.create', compact( 'message', 'inbox'));
     }
 
     public function store(Request $request){
@@ -43,11 +43,11 @@ class ShippingController extends Controller
 
     public function edit(Request $request){
         $id = Auth::user()->id;
-        $report = $this->getReportCount($id);
+        
         $message = $this->getMessageCount($id);
         $inbox = $this->getInboxCount($id);
         $shipping = Shipping::where('id', $request->id)->first();
-        return view('Admin.shipping.edit', compact('shipping', 'report', 'message', 'inbox'));
+        return view('Admin.shipping.edit', compact('shipping', 'message', 'inbox'));
     }
 
     public function update(Request $request){
@@ -68,10 +68,6 @@ class ShippingController extends Controller
         return redirect()->route('admin.shipping.index');
     }
 
-    public function getReportCount($id){
-        $report = Report::where('user_id', $id)->where('status', 0)->count();
-        return $report;
-    }
 
     public function getMessageCount($id){
         $message = Message::where('user_id', $id)->where('read', 0)->count();
@@ -85,10 +81,5 @@ class ShippingController extends Controller
         return $inbox;
     }
 
-    public function getReport(){
-        $id = Auth::user()->id;
-        $report = Report::where('user_id', $id)->where('status', 0)->get();
-        return view('Admin.report.index', compact('report'));
-    }
     
 }

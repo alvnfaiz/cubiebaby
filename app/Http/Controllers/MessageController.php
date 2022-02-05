@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Report;
+
 use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,16 +14,17 @@ class MessageController extends Controller
     public function index(){
         $id = Auth::check()?Auth::user()->id:0;
         $message = $this->getMessageCount();
-        $report = $this->getReportCount();
         $inbox = User::with('latestMessage')->get();;
-        return view('Admin.pesan.index', compact( 'message', 'report', 'inbox'));
+        return view('Admin.pesan.index', compact( 'message', 'inbox'));
 
 
     }
 
     public function apiGetMessage(Request $request){
         $message = Message::where('user_id', $request->user_id)->get();
+        Message::where('user_id', $request->user_id)->update(['read' => true]);
         return response()->json($message);
+
     }
 
     public function apiSendMessage(Request $request){
@@ -79,13 +80,7 @@ class MessageController extends Controller
         }
     }
 
-    public function getReportCount()
-    {
-        $report = Report::where('status', 'open')
-            ->where('read', 0)
-            ->count();
-        return $report;
-    }
+
 
     public function getMessageCount()
     {

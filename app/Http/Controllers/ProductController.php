@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Report;
+
 use App\Models\Message;
 use App\Models\Product;
 use App\Models\Category;
@@ -23,13 +23,6 @@ class ProductController extends Controller
         return $inbox;
     }
 
-    public function getReportCount($id)
-    {
-        $report = Report::where('status', 'open')
-            ->where('read', 0)
-            ->count();
-        return $report;
-    }
 
     public function getMessageCount($id)
     {
@@ -50,7 +43,7 @@ class ProductController extends Controller
 
     public function index(){
         $id = Auth::user()->id;
-        $report = $this->getReportCount($id);
+        
         $message = $this->getMessageCount($id);
         $inbox = $this->getInboxCount($id);
         $product = Product::latest();
@@ -63,16 +56,16 @@ class ProductController extends Controller
             });
         }
         $product = $product->paginate(20);
-        return view('Admin.Product.index', \compact('report', 'message', 'inbox', 'product'));
+        return view('Admin.Product.index', \compact( 'message', 'inbox', 'product'));
     }
 
     public function create(){
         $id = Auth::user()->id;
-        $report = $this->getReportCount($id);
+        
         $message = $this->getMessageCount($id);
         $inbox = $this->getInboxCount($id);
         $category = Category::all();
-        return view('Admin.Product.create', compact('category', 'report', 'message', 'inbox'));
+        return view('Admin.Product.create', compact('category', 'message', 'inbox'));
     }
 
     public function store(Request $request){
@@ -96,12 +89,12 @@ class ProductController extends Controller
 
     public function edit(Request $request){
         $id = Auth::user()->id;
-        $report = $this->getReportCount($id);
+        
         $message = $this->getMessageCount($id);
         $inbox = $this->getInboxCount($id);
         $category = Category::all();
         $product = Product::find($id);
-        return view('Admin.Product.edit', compact('product', 'category', 'report', 'message', 'inbox'));
+        return view('Admin.Product.edit', compact('product', 'category', 'message', 'inbox'));
     }
 
     public function update(Request $request){

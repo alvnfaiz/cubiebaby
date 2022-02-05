@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\User;
-use App\Models\Report;
+
 use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,21 +15,21 @@ class MemberController extends Controller
     //
     public function index(){
         $id = Auth::user()->id;
-        $report = $this->getReportCount($id);
+        
         $message = $this->getMessageCount($id);
         $cart_count = $this->getCartCount($id);
         $user = User::where('id', $id)->first();
-        return view('Member.profile', compact('user', 'message', 'report', 'cart_count'));
+        return view('Member.profile', compact('user', 'message', 'cart_count'));
     }
 
     public function edit(Request $request){
         $id = Auth::user()->id;
-        $report = $this->getReportCount($id);
+        
         $message = $this->getMessageCount($id);
         $cart_count = $this->getCartCount($id);
 
         $user = User::where('id', $id)->first();
-        return view('Member.edit', compact('user', 'message', 'report', 'cart_count'));
+        return view('Member.edit', compact('user', 'message', 'cart_count'));
     }
 
     public function update(Request $request){
@@ -73,13 +73,6 @@ class MemberController extends Controller
         }
     }
 
-    protected function getReportCount($id = 0){
-        $this->report = Report::whereHas('reportReply', function($query){
-            $query->where('read', 0);
-        })->where('user_id', $id)
-        ->count();
-        return $this->report;
-    }
 
     protected function getMessageCount($id = 0){
         $this->message = Message::select('*')

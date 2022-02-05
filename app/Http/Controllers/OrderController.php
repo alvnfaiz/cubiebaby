@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Order;
-use App\Models\Report;
+
 use App\Models\Message;
 use App\Models\Product;
 use App\Models\Shipping;
@@ -19,14 +19,14 @@ class OrderController extends Controller
 
     public function edit(Request $request){
         $id = Auth::user()->id;
-        $report = $this->getReportCount($id);
+        
         $message = $this->getMessageCount($id);
         $inbox = $this->getCartCount($id);
         $order = Order::where('id', $request->id)
         ->first();
         // dd($order->destination);
         $order_detail = OrderDetail::where('order_id', $request->id)->get();
-        return view('Admin.order.edit', compact('order', 'report', 'message', 'inbox', 'order_detail'));
+        return view('Admin.order.edit', compact('order', 'message', 'inbox', 'order_detail'));
     }
 
     public function update(Request $request){
@@ -43,39 +43,39 @@ class OrderController extends Controller
 
     public function proses(){
         $id = Auth::user()->id;
-        $report = $this->getReportCount($id);
+        
         $message = $this->getMessageCount($id);
         $inbox = $this->getCartCount($id);
         $orders = Order::where('order_status', 'Proses')->paginate(20);
-        return view('Admin.order.proses', compact('report', 'message', 'inbox', 'orders'));
+        return view('Admin.order.proses', compact( 'message', 'inbox', 'orders'));
     }
 
     public function indexAdmin(){
         $id = Auth::user()->id;
-        $report = $this->getReportCount($id);
+        
         $message = $this->getMessageCount($id);
         $inbox = $this->getCartCount($id);
         $orders = Order::paginate(20);
-        return view('Admin.order.proses', compact('report', 'message', 'inbox', 'orders'));
+        return view('Admin.order.proses', compact( 'message', 'inbox', 'orders'));
     }
 
     public function cancel(){
         $id = Auth::user()->id;
-        $report = $this->getReportCount($id);
+        
         $message = $this->getMessageCount($id);
         $inbox = $this->getCartCount($id);
         $orders = Order::where('order_status', 'Cancel')->
         orWhere('order_status', 'Expired')->paginate(20);
-        return view('Admin.order.proses', compact('report', 'message', 'inbox', 'orders'));
+        return view('Admin.order.proses', compact( 'message', 'inbox', 'orders'));
     }
 
     public function selesai(){
         $id = Auth::user()->id;
-        $report = $this->getReportCount($id);
+        
         $message = $this->getMessageCount($id);
         $inbox = $this->getCartCount($id);
         $orders = Order::where('order_status', 'Selesai')->paginate(20);
-        return view('Admin.order.proses', compact('report', 'message', 'inbox', 'orders'));
+        return view('Admin.order.proses', compact( 'message', 'inbox', 'orders'));
     }
 
 
@@ -126,22 +126,22 @@ class OrderController extends Controller
 
     public function index(){
         $id = Auth::user()->id;
-        $report = $this->getReportCount($id);
+        
         $message = $this->getMessageCount($id);
         $cart_count = $this->getCartCount($id);
         $orders = Order::where('user_id', $id)->get();
-        return view('member.order.index', compact('orders', 'report', 'message', 'cart_count'));
+        return view('member.order.index', compact('orders', 'message', 'cart_count'));
     }
 
     public function detail(Request $request){
         $id = Auth::user()->id;
-        $report = $this->getReportCount($id);
+        
         $message = $this->getMessageCount($id);
         $cart_count = $this->getCartCount($id);
         $id = Auth::user()->id;
         $order = Order::where('id', $request->id)->first();
         $orderDetail = Order::where('id', $request->id)->first()->detail;
-        return view('member.order.detail', compact('order', 'report', 'message', 'cart_count', 'orderDetail'));
+        return view('member.order.detail', compact('order', 'message', 'cart_count', 'orderDetail'));
     }
 
     public function getTotalPrice(){
@@ -171,13 +171,7 @@ class OrderController extends Controller
         }
     }
 
-    protected function getReportCount($id = 0){
-        $this->report = Report::whereHas('reportReply', function($query){
-            $query->where('read', 0);
-        })->where('user_id', $id)
-        ->count();
-        return $this->report;
-    }
+
 
     protected function getMessageCount($id = 0){
         $this->message = Message::select('*')

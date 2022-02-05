@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Report;
+
 use App\Models\Message;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -13,19 +13,19 @@ class CategoryController extends Controller
     //
     public function index(){
         $id = Auth::user()->id;
-        $report = $this->getReportCount($id);
+        
         $message = $this->getMessageCount($id);
         $inbox = $this->getInboxCount($id);
         $categories = Category::all();
-        return view('Admin.category.index', compact('categories', 'message', 'report', 'inbox'));
+        return view('Admin.category.index', compact('categories', 'message', 'inbox'));
     }
 
     public function create(){
         $id = Auth::user()->id;
-        $report = $this->getReportCount($id);
+        
         $message = $this->getMessageCount($id);
         $inbox = $this->getInboxCount($id);
-        return view('Admin.category.create', compact('report', 'message', 'inbox'));
+        return view('Admin.category.create', compact( 'message', 'inbox'));
     }
 
     public function store(Request $request){
@@ -42,11 +42,11 @@ class CategoryController extends Controller
 
     public function edit(Request $request){
         $id = Auth::user()->id;
-        $report = $this->getReportCount($id);
+        
         $message = $this->getMessageCount($id);
         $inbox = $this->getInboxCount($id);
         $category = Category::where('id', $request->id)->first();
-        return view('Admin.category.edit', compact('category', 'report', 'message', 'inbox'));
+        return view('Admin.category.edit', compact('category', 'message', 'inbox'));
     }
 
     public function update(Request $request){
@@ -75,13 +75,6 @@ class CategoryController extends Controller
         return $inbox;
     }
 
-    public function getReportCount($id)
-    {
-        $report = Report::where('status', 'open')
-            ->where('read', 0)
-            ->count();
-        return $report;
-    }
 
     public function getMessageCount($id)
     {
