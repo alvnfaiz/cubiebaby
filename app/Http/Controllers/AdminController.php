@@ -61,6 +61,13 @@ class AdminController extends Controller
             compact('barang', 'message', 'inbox', 'sold', 'order', 'finish_order', 'cancel_order', 'shipping_order', 'userCount', 'potential', 'lastOrder', 'User'));
     }
 
+    public function username(Request $request){
+        $username = $request->username;
+        $user = User::where('username','like','%'.$username.'%')->get();
+        return response()->json($user);
+
+    }
+
 
     public function settingsForm(){
         return view('admin.setting');
@@ -70,20 +77,12 @@ class AdminController extends Controller
 
     }
 
-    protected function getCartCount($id = 0){
-        if($id == 0){
-            $cart = Cache::get('cart');
-            if(!$cart){
-                return 0;
-            }
-            return count($cart);
-        }else{
-            $cart = Cart::where('user_id', $id)->get();
-            if(!$cart){
-                return 0;
-            }
-            return count($cart);
-        }
+    protected function getInboxCount()
+    {
+        $inbox = Message::select('*')
+            ->distinct()
+            ->count('user_id');
+        return $inbox;
     }
 
     public function getMessageCount()

@@ -45,9 +45,9 @@
                                 <div class="col-span-3 sm:col-span-2">
                                     <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
                                     <input type="radio" value="active" name="status" @if(old('status') == 'active') checked @endif>
-                                    <label for="status" class="ml-2">Active</label>
+                                    <label for="active" class="ml-2">Active</label>
                                     <input type="radio" value="inactive" name="status" @if(old('status') == 'inactive') checked @endif>
-                                    <label for="status" class="ml-2">Inactive</label>
+                                    <label for="inactive" class="ml-2">Inactive</label>
                                     @error('status')
                                         <p class="mt-2 text-xs italic text-red-500">{{ $message }}</p>
                                     @enderror

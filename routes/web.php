@@ -12,6 +12,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ShippingController;
+use App\Http\Controllers\BroadcastController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\UserMessageController;
 
@@ -98,12 +99,13 @@ Route::middleware('admin')->prefix('')->name('admin.')->group(function(){
     //     Route::put('/{id}/edit', [PegawaiController::class, 'update'])->name('update');
     //     Route::post('/{id}/delete', [PegawaiController::class, 'delete'])->name('delete');
     // });
-
-    Route::prefix('/report')->name('report.')->group(function(){
-        
+    Route::post('/username', [AdminController::class, 'username'])->name('username');
+    
+    Route::prefix('/report')->name('report.')->group(function(){      
         Route::get('/', [ReportController::class, 'index'])->name('index');
-        Route::get('/{id}', [ReportController::class, 'create'])->name('create');
-        Route::post('/{id}', [ReportController::class, 'store'])->name('store');
+        Route::get('/member', [ReportController::class, 'member'])->name('member');
+        Route::get('/sale', [ReportController::class, 'sale'])->name('sale');
+        
     });
 
     // shipping
@@ -134,6 +136,12 @@ Route::middleware('admin')->prefix('')->name('admin.')->group(function(){
         Route::post('/{id}/delete', [BotChatController::class, 'delete'])->name('delete');
     });
 
+    Route::prefix('/broadcast')->name('broadcast.')->group(function(){
+        Route::get('/', [BroadcastController::class, 'index'])->name('index');
+        Route::get('/create', [BroadcastController::class, 'create'])->name('create');
+        Route::post('/create', [BroadcastController::class, 'store'])->name('store');
+    });
+
 
 });
 
@@ -148,6 +156,7 @@ Route::post('/api/message/list', [UserMessageController::class, 'apiGetNewMessag
 //Order
 Route::post('/order/add', [OrderController::class, 'store'])->middleware('member')->name('member.order.add');
 Route::get('/order', [OrderController::class, 'index'])->middleware('member')->name('member.order.index');
+Route::put('/order/{id}/update', [OrderController::class, 'update'])->middleware('member')->name('member.order.update');
 Route::get('/order/{id}', [OrderController::class, 'detail'])->middleware('member')->name('member.order.detail');
 
 

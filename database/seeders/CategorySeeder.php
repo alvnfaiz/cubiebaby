@@ -22,23 +22,23 @@ class CategorySeeder extends Seeder
         ]);
         Category::create([
             'id'   => '2',
-            'name' => 'Pakaian Dalam',
-            'slug' => 'pakaian-dalam',
+            'name' => 'Boneka',
+            'slug' => 'boneka',
         ]);
         Category::create([
             'id'   => '3',
-            'name' => 'Pakaian',
-            'slug' => 'pakaian',
+            'name' => 'Dompet',
+            'slug' => 'dompet',
         ]);
         Category::create([
             'id'   => '4',
-            'name' => 'Makanan',
-            'slug' => 'makanan',
+            'name' => 'Hijab Motif',
+            'slug' => 'hijab-motif',
         ]);
         Category::create([
             'id'   => '5',
-            'name' => 'Minuman',
-            'slug' => 'minuman',
+            'name' => 'Kutek',
+            'slug' => 'kutek',
         ]);
         Category::create([
             'id'   => '6',
@@ -47,18 +47,18 @@ class CategorySeeder extends Seeder
         ]);
         Category::create([
             'id'   => '7',
-            'name' => 'Perlengkapan',
-            'slug' => 'perlangkapan',
+            'name' => 'Sarung Tangan Wol',
+            'slug' => 'sarung-tangan-wol',
         ]);
         Category::create([
             'id'   => '8',
-            'name' => 'Sabun',
-            'slug' => 'sabun',
+            'name' => 'SheetMask',
+            'slug' => 'sheetmask',
         ]);
         Category::create([
             'id'   => '9',
-            'name' => 'Bedak',
-            'slug' => 'bedak',
+            'name' => 'Strap Masker',
+            'slug' => 'strap-masker',
         ]);
     }
 }

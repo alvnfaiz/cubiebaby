@@ -51,4 +51,10 @@ class User extends Authenticatable
     public function messages(){
         return $this->hasMany(Message::class, 'user_id');
     }
+
+    public function user_activity()
+    {
+        return $this->belongsTo(UserActivity::class, 'user_id');
+    }
 }
+

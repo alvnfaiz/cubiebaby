@@ -6,6 +6,7 @@ use App\Models\Cart;
 use App\Models\User;
 
 use App\Models\Message;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -15,21 +16,21 @@ class MemberController extends Controller
     //
     public function index(){
         $id = Auth::user()->id;
-        
+        $category = Category::all();
         $message = $this->getMessageCount($id);
         $cart_count = $this->getCartCount($id);
         $user = User::where('id', $id)->first();
-        return view('Member.profile', compact('user', 'message', 'cart_count'));
+        return view('Member.profile', compact('user', 'message', 'cart_count', 'category'));
     }
 
     public function edit(Request $request){
         $id = Auth::user()->id;
-        
+        $category = Category::all();
         $message = $this->getMessageCount($id);
         $cart_count = $this->getCartCount($id);
 
         $user = User::where('id', $id)->first();
-        return view('Member.edit', compact('user', 'message', 'cart_count'));
+        return view('Member.edit', compact('user', 'message', 'cart_count', 'category'));
     }
 
     public function update(Request $request){
@@ -78,6 +79,7 @@ class MemberController extends Controller
         $this->message = Message::select('*')
             ->where('user_id', $id)
             ->where('read', 0)
+            ->where('admin', true)
             ->count();
         return $this->message;
     }

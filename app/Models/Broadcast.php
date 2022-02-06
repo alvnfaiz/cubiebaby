@@ -21,7 +21,7 @@ class Broadcast extends Model
 
     public function recipient()
     {
-        return $this->belongsTo(BroadcastRecipient::class);
+        return $this->hasMany(BroadcastRecipient::class);
     }
 
     public function img($value)

@@ -12,10 +12,8 @@ class BotChatController extends Controller
 {
     //
     public function index(){
-        $id = Auth::user()->id;
-        
-        $message = $this->getMessageCount($id);
-        $inbox = $this->getInboxCount($id);
+        $message = $this->getMessageCount();
+        $inbox = $this->getInboxCount();
         $chats = BotChat::paginate(50);
         return view('Admin.botchat.index', compact('chats', 'message', 'inbox'));
     }
@@ -23,8 +21,8 @@ class BotChatController extends Controller
     public function create(){
         $id = Auth::user()->id;
         
-        $message = $this->getMessageCount($id);
-        $inbox = $this->getInboxCount($id);
+        $message = $this->getMessageCount();
+        $inbox = $this->getInboxCount();
         return view('Admin.botchat.create', compact( 'message', 'inbox'));
     }
 
@@ -72,7 +70,7 @@ class BotChatController extends Controller
         return redirect()->route('admin.botchat.index');
     }
 
-    protected function getInboxCount($id)
+    protected function getInboxCount()
     {
         $inbox = Message::select('*')
             ->distinct()
@@ -81,7 +79,7 @@ class BotChatController extends Controller
     }
 
 
-    public function getMessageCount($id)
+    public function getMessageCount()
     {
         $message = Message::select('*')
         ->where('read', 0)

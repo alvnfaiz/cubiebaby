@@ -7,6 +7,7 @@ use App\Models\Order;
 
 use App\Models\Message;
 use App\Models\Product;
+use App\Models\Category;
 use App\Models\Shipping;
 use App\Models\Destination;
 use App\Models\OrderDetail;
@@ -139,9 +140,10 @@ class OrderController extends Controller
         $message = $this->getMessageCount($id);
         $cart_count = $this->getCartCount($id);
         $id = Auth::user()->id;
+        $category = Category::all();
         $order = Order::where('id', $request->id)->first();
         $orderDetail = Order::where('id', $request->id)->first()->detail;
-        return view('member.order.detail', compact('order', 'message', 'cart_count', 'orderDetail'));
+        return view('member.order.detail', compact('order', 'message', 'cart_count', 'orderDetail', 'category'));
     }
 
     public function getTotalPrice(){
@@ -177,6 +179,7 @@ class OrderController extends Controller
         $this->message = Message::select('*')
             ->where('user_id', $id)
             ->where('read', 0)
+            ->where('admin', true)
             ->count();
         return $this->message;
     }

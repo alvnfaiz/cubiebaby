@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Cart;
 use App\Models\BotChat;
 use App\Models\Message;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,10 +15,11 @@ class UserMessageController extends Controller
     //
     public function index(){
         $id = Auth::user()->id;
-        
+        $cart_count = $this->getCartCount($id);
         $message = $this->getMessageCount($id);
+        $category = Category::all();
         $chats = Message::where('user_id', $id)->get();
-        return view('Member.pesan.index', compact('chats', 'message', 'cart_count'));
+        return view('Member.pesan.index', compact('chats', 'message', 'cart_count', 'category'));
     }
 
     public function adminMessageUpdate(Request $request){
@@ -27,10 +30,15 @@ class UserMessageController extends Controller
     }
 
     public function apiSend(Request $request){
-        $message = new Message();
-        Message::create([
+        //upload image
+        $image = null;
+        if($request->hasFile('image')){ 
+            $imageName = time().'.'.$request->image->extension();  
+            $image = $request->file('image')->store('products');
+        }
+        $message = Message::create([
             'user_id' => Auth::user()->id,
-            'image' => $request->image,
+            'image' => $image,
             'message' => $request->message,
             'read' => false,
             'admin' => false,
@@ -50,12 +58,11 @@ class UserMessageController extends Controller
         return response()->json([
             'success' => true,
             'message' => $request->message,
-            'image' => $request->image,
+            'image' => $image,
             'id' => $message->id,
             'reply' => $reply,
             
         ]);
-        event(new Pesan($request->message, $request->user_id));
     }
 
     public function apiGetMessage(Request $request){
@@ -108,11 +115,12 @@ class UserMessageController extends Controller
 
 
 
-    public function getMessageCount($id)
-    {
-        $message = Message::select('*')
-        ->where('read', 0)
-        ->count();
-        return $message;
+    protected function getMessageCount($id = 0){
+        $this->message = Message::select('*')
+            ->where('user_id', $id)
+            ->where('read', 0)
+            ->where('admin', true)
+            ->count();
+        return $this->message;
     }
 }

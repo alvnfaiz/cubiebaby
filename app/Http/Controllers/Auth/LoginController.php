@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\User;
+use App\Models\Category;
 use App\Models\UserActivity;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -13,7 +15,8 @@ class LoginController extends Controller
     //
     public function loginForm()
     {
-        return view('auth.login');
+        $category = Category::all();
+        return view('auth.login', compact('category'));
     }
 
     public function authenticated(Request $request)
@@ -65,7 +68,8 @@ class LoginController extends Controller
 
 
     public function registerForm(){
-        return view('auth.register');
+        $category = Category::all();
+        return view('auth.register', compact('category'));
     }
 
 
@@ -76,6 +80,7 @@ class LoginController extends Controller
             'username' => 'required|min:6|max:255|unique:users,username',
             'email' => 'required|unique:users,email',
             'password' => 'required|min:6',
+            'password_confirmation' => 'required|same:password',
             'phone_number' => 'regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
             'address' => 'nullable',
         ]);

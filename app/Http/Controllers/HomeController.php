@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\User;
 
+use App\Models\Banner;
 use App\Models\Message;
 use App\Models\Product;
+use App\Models\Category;
 use App\Models\Shipping;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -17,10 +19,18 @@ class HomeController extends Controller
     protected $message;
     protected $inbox;
 
+    public function __construct(Message $message, Shipping $shipping)
+    {
+        $this->category = Category::all();
+    }
+
     public function index(){
         $products = Product::latest();
         $id = isset(auth()->user()->id)?auth()->user()->id:0;
-    
+        //get Latest 3 banner from Banner table
+        $banner = Banner::where('status', 'active')->take(3)->get();
+        //get all category
+        $category = $this->category;
         $message = $this->getMessageCount($id);
         $cart_count = $this->getCartCount($id);
         if(request('search')){
@@ -32,16 +42,16 @@ class HomeController extends Controller
             });
         }
         $barangs = $products->paginate(12);
-        return view('home', compact('barangs', 'message', 'cart_count'));
+        return view('home', compact('barangs', 'message', 'cart_count', 'banner', 'category'));
     }
 
     public function showBarang(Request $request){
         $id = isset(auth()->user()->id)?auth()->user()->id:0;
         $message = $this->getMessageCount($id);
-        
+        $category = $this->category;
         $cart_count = $this->getCartCount($id);
         $barang = Product::where('id', $request->id)->first();
-        return view('product', compact('barang', 'message', 'cart_count'));
+        return view('product', compact('barang', 'message', 'cart_count', 'category'));
 
     }
 
@@ -52,20 +62,20 @@ class HomeController extends Controller
             $query->where('slug', $request->slug);
         })->paginate(12);
         $message = $this->getMessageCount($id);
-        
+        $category = $this->category;
         $cart_count = $this->getCartCount($id);
-        return view('category', compact('barangs', 'message', 'cart_count'));
+        return view('category', compact('barangs', 'message', 'cart_count', 'category'));
     }
 
     public function cart(){
         $id = isset(auth()->user()->id)?auth()->user()->id:0;
         $message = $this->getMessageCount($id);
-        
+        $category = $this->category;
         $cart_count = $this->getCartCount($id);
         $total_price = $this->getTotalPrice();
         $shipping = Shipping::all();
         $cart = Cart::where('user_id', $id)->get();
-        return view('cart', compact('message', 'cart_count', 'cart','total_price', 'shipping'));
+        return view('cart', compact('message', 'cart_count', 'cart','total_price', 'shipping', 'category'));
     }
 
     public function addCart(Request $request){
@@ -128,6 +138,7 @@ class HomeController extends Controller
         $this->message = Message::select('*')
             ->where('user_id', $id)
             ->where('read', 0)
+            ->where('admin', true)
             ->count();
         return $this->message;
     }

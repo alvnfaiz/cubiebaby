@@ -77,8 +77,8 @@
                                         <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
                                         <input type="radio" value="Available" name="status" @if(old('status') == 'Available') checked @endif>
                                         <label for="status" class="ml-2">Available</label>
-                                        <input type="radio" value="Unvailable" name="status" @if(old('status') == 'Unavailable') checked @endif>
-                                        <label for="status" class="ml-2">Unvailable</label>
+                                        <input type="radio" value="Unavailable" name="status" @if(old('status') == 'Unavailable') checked @endif>
+                                        <label for="status" class="ml-2">Unavailable</label>
                                         @error('status')
                                             <p class="mt-2 text-xs italic text-red-500">{{ $message }}</p>
                                         @enderror
