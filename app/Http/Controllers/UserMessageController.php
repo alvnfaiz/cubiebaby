@@ -44,7 +44,7 @@ class UserMessageController extends Controller
             'admin' => false,
         ]);
         //select from table botchat where message like request->messsage
-        $bot = BotChat::where('message', 'like', '%'.$request->message.'%')->first();
+        $bot = BotChat::where('message', 'like', '%'.$request->message.'%')->where('status', 'active')->first();
         $reply = false;
         if($bot){
             Message::create([

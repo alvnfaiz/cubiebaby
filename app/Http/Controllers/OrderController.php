@@ -146,6 +146,23 @@ class OrderController extends Controller
         return view('member.order.detail', compact('order', 'message', 'cart_count', 'orderDetail', 'category'));
     }
 
+    public function insertMedia(Request $request){
+        $id = Auth::user()->id;
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
+        ]);
+  
+        $data = $request->file('image')->store('bp');
+
+
+        $order = Order::where('id', $request->id)->first();
+        $order->update([
+            'image' => $data,
+            
+        ]);
+        return redirect()->route('member.order.detail', $order->id);
+    }
+
     public function getTotalPrice(){
         $id = auth()->user()->id;
         $cart = Cart::where('user_id', auth()->user()->id)->get();

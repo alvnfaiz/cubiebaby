@@ -55,10 +55,10 @@
                     <td>
                         <div class="flex justify-end space-x-6 mr-6">
                             <a href="{{ route('admin.product.edit', $barang->id) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Edit</a>
-                            <form action="{{ route('admin.product.delete', $barang->id) }}" method="POST">
+                            {{-- <form action="{{ route('admin.product.delete', $barang->id) }}" method="POST">
                                 @csrf
                                 <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full">Delete</button>
-                            </form>
+                            </form> --}}
                         </div>
                     </td>
                 </tr>

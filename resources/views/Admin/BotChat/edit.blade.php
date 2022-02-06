@@ -6,8 +6,9 @@
         <div class="mt-10">
             <div>
                 <div class="mt-5 md:mt-0 md:col-span-2">
-                    <form action="{{ route('admin.botchat.store') }}" method="POST">
+                    <form action="{{ route('admin.botchat.update', $bot->id) }}" method="POST">
                         @csrf
+                        @method('put')
                         <div class="sm:rounded-md sm:overflow-hidden">
                             <div class="px-4 py-5 space-y-6 bg-white sm:p-6">
                                 <div class="grid grid-cols-3 gap-6">

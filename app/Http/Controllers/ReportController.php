@@ -11,6 +11,8 @@ use App\Models\OrderDetail;
 use App\Models\UserActivity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 class ReportController extends Controller
 {
@@ -20,9 +22,31 @@ class ReportController extends Controller
         $id = Auth::user()->id;
         $message = $this->getMessageCount($id);
         $inbox = $this->getInboxCount($id);
-        $reports = Report::paginate(20);
-        return view('Admin.report.index', compact( 'message', 'inbox'));
+        $reports = $this->getProductLast30DaysOrder();
+        $startDate = date('Y-m-d', strtotime('-30 days'));
+        $endDate = date('Y-m-d');
+        return view('Admin.report.index', compact( 'message', 'inbox', 'reports', 'startDate', 'endDate'));
     }
+
+    public function createPDF(Request $requets) {
+        // retreive all records from db
+        if($requets->start){
+            $reports = $this->getReportDay($requets->start, $requets->end);
+            $start = $requets->start;
+            $end = $requets->end;
+
+        }else{
+            $reports = $this->getProductLast30DaysOrder();
+            $start = date('Y-m-d', strtotime('-30 days'));
+            $end = date('Y-m-d');
+        }
+        $tanggal = $start.' s/d '.$end;
+        //view()->share('data',$data);
+        $pdf = PDF::loadView('pdf-view', compact('reports', 'tanggal'));
+        // download PDF file with download method
+        return \view('pdf-view', compact('reports', 'tanggal'));
+        return $pdf->download('pdf_file.pdf');
+      }
 
     public function member(){
         $id = Auth::user()->id;
@@ -96,11 +120,10 @@ class ReportController extends Controller
     }
 
     public function indexAdmin(){
-        $id = Auth::user()->id;
-        
-        $message = $this->getMessageCount($id);
-        $inbox = $this->getInboxCount($id);
-        $reports = Report::paginate(20);
+
+        $message = $this->getMessageCount();
+        $inbox = $this->getInboxCount();
+        $reports = $this->getProductLast30DaysOrder();
         return view('Admin.report.index', compact( 'message', 'inbox', 'reports'));
     }
 
@@ -114,6 +137,41 @@ class ReportController extends Controller
         $report->save();
 
         return redirect()->route('admin.report.index');
+    }
+
+    public function getReport(Request $request){
+        $startDate = $request->start;
+        $endDate = $request->end;
+        $reports = $this->getReportDay($startDate, $endDate);
+        $message = $this->getMessageCount();
+        $inbox = $this->getInboxCount();
+
+        return view('Admin.report.index', compact('reports', 'message', 'inbox', 'startDate', 'endDate'));
+    }
+
+    public function getReportDay($startDate, $endDate){
+        $this->startDate = $startDate;
+        $this->endDate = $endDate;
+        $Products = Product::whereHas('order_detail', function($query){
+            $query->whereHas('order', function($query){
+                $query->whereBetween('created_at',[$this->startDate, $this->endDate])->where('status_payment', 'Lunas');
+            });
+        })->get();
+        $total = 0;
+        foreach($Products as $i=>$product){
+            $data = Order::whereHas('order_detail', function($query) use ($product){
+                $query->where('product_id', $product->id);
+                })->whereBetween('created_at',[$startDate, $endDate])->where('status_payment', 'Lunas');
+            //banyak order
+
+            $Products[$i]['total_order'] = OrderDetail::where('product_id', $product->id)->sum('total');
+            $Products[$i]['total_price'] = $data->sum('total_price');
+            $total += $Products[$i]['total_order'];
+        }
+        
+        $reports['total'] = $total;
+        $reports['products'] = $Products;
+        return $reports;
     }
 
     public function getMessageCount()

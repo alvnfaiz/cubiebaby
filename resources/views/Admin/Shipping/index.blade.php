@@ -54,7 +54,7 @@
                                     
                                     <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
                                     <a href="{{ route('admin.shipping.edit', $shipping->id) }}" class="text-indigo-600 hover:text-blue-400">Edit</a>
-                                    <a href="#" class="ml-8 text-red-600 hover:text-red-400">Edit</a>
+                                    
                                     </td>
                                 </tr>
                             @endforeach

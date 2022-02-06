@@ -14,7 +14,7 @@ class Products extends Migration
     public function up()
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->id();
+            $table->id()->onDelete('cascade');
             $table->string('name');
             $table->string('deskripsi');
             $table->string('image')->nullable();

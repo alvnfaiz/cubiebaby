@@ -58,10 +58,10 @@
                                             </div>
                                             <div id="pencarian"></div>
                                         </div>
-                                        {{-- <div id="id_penerima">
-                                            <input type="checkbox" name="receiver[]" id="receiver-0" value="0" class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out">
-                                            <label for="0" class="ml-2">Pelanggan Potensial</label>
-                                        </div> --}}
+                                        <div id="id_penerima" class="flex flex-col">
+                                            {{-- <input type="checkbox" name="receiver[]" id="receiver-0" value="0" class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out">
+                                            <label for="0" class="ml-2">Pelanggan Potensial</label> --}}
+                                        </div>
                                         @error('user_id')
                                             <p class="mt-2 text-xs italic text-red-500">{{ $message }}</p>
                                         @enderror

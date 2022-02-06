@@ -26,8 +26,7 @@
                             <div class="flex flex-col justify-between ml-4 flex-grow">
                                 <span class="font-bold text-sm">{{ $barang->product->name }}</span>
                                 <span class="text-red-500 text-xs">{{ $barang->product->category->name }}</span>
-                                <button type="submit" class="text-red-500 text-xs"
-                                    onclick="deleteCart({{ $barang->product->id }})">Remove</button>
+                                
                             </div>
                         </div>
                         <div class="flex justify-center w-1/5">
@@ -70,13 +69,15 @@
                 </div>
             </div>
             <div class="flex flex-col rounded shadow-md p-2">
+                
+                @if(!$order->image)
                 <span>Silahkan Transfer Pembayaran Kamu kesini</span>
                 <div class="flex flex-col mt-4">
                     <span class="text-blue-500">BRI</span>
                     <span class="text-md font-bold text-blue-500">5436 </span>
                     <span class=" text-gray-700">a\n Alvin Faiz Zulfitri</span>
                 </div>
-                <form method="POST" action="{{ route('member.order.update', $order->id) }}">
+                <form method="POST" action="{{ route('member.order.update', $order->id) }}" enctype="multipart/form-data">
                     @csrf
                     @method('put')
                     <div class="flex justify-center px-6 pt-5 pb-6 mt-1 border-2 border-gray-300 border-dashed rounded-md">
@@ -93,7 +94,13 @@
                             </p>
                         </div>
                     </div>
+                    <input type="submit" value="Submit" class="px-6 py-3 bg-blue-500 text-white rounded-md">
+                    
                 </form>
+                @else
+                    <img src="{{ asset('storage/' . $order->image) }}" alt="" class="w-64">
+
+                @endif
             </div>
         </div>
     </div>

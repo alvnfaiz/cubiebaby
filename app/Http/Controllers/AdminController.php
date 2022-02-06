@@ -55,10 +55,18 @@ class AdminController extends Controller
                 $query->where('status_payment', 'Lunas')
                     ->where('order_status', 'Proses');
             });
-        
+        $listOrder = $this->getProsesOrder();
         return view(
             'admin.index', 
-            compact('barang', 'message', 'inbox', 'sold', 'order', 'finish_order', 'cancel_order', 'shipping_order', 'userCount', 'potential', 'lastOrder', 'User'));
+            compact('barang', 'message', 'inbox', 'sold', 'order', 'finish_order', 'cancel_order', 'shipping_order', 'userCount', 'potential', 'lastOrder', 'User', 'listOrder'));
+    }
+
+    protected function getProsesOrder(){
+        $order = Order::select('*')
+            ->where('order_status', 'Proses')
+            ->where('status_payment', 'Belum Lunas')
+            ->get();
+        return $order;
     }
 
     public function username(Request $request){

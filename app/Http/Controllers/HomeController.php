@@ -28,7 +28,7 @@ class HomeController extends Controller
         $products = Product::latest();
         $id = isset(auth()->user()->id)?auth()->user()->id:0;
         //get Latest 3 banner from Banner table
-        $banner = Banner::where('status', 'active')->take(3)->get();
+        $banners = Banner::where('status', 'active')->take(3)->get();
         //get all category
         $category = $this->category;
         $message = $this->getMessageCount($id);
@@ -42,7 +42,7 @@ class HomeController extends Controller
             });
         }
         $barangs = $products->paginate(12);
-        return view('home', compact('barangs', 'message', 'cart_count', 'banner', 'category'));
+        return view('home', compact('barangs', 'message', 'cart_count', 'banners', 'category'));
     }
 
     public function showBarang(Request $request){

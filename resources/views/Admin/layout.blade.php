@@ -6,8 +6,17 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
     <script src="https://cdn.tailwindcss.com"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        @media print{
+            .no-print{
+                display: none;
+            }
+        }
+    </style>
 </head>
 <body class="bg-gray-200">
     <div class="md:flex flex-col md:flex-row md:min-h-screen w-full absolute">
@@ -31,6 +40,7 @@
                 </button>
                 <div x-show="report" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute right-0 w-full mt-2 origin-top-right rounded-md shadow-lg">
                 <div class="px-2 py-2 bg-white rounded-md shadow dark-mode:bg-gray-800">
+                    <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900 hover:bg-gray-200 " href="{{ route('admin.report.index') }}">Index</a>
                     <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900 hover:bg-gray-200 " href="{{ route('admin.report.member') }}">Pelanggan</a>
                     <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900 hover:bg-gray-200 " href="{{ route('admin.report.sale') }}">Penjualan</a>
                 </div>
@@ -60,7 +70,7 @@
             </nav>
         </div>
         <div class="w-full">
-            <div class="bg-white shadow-md">
+            <div class="bg-white shadow-md no-print">
                 <div class="container flex flex-row justify-between mx-auto">
                     <div class="flex flex-row p-4 space-x-8">
                         <a href="{{ route('member.profile') }}" class="text-sky-600 hover:text-blue-600 mx-6"> {{ auth()->user()->email}} </a>

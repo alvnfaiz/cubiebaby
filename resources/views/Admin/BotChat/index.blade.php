@@ -54,7 +54,10 @@
                                     
                                     <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
                                     <a href="{{ route('admin.botchat.edit', $chat->id) }}" class="text-indigo-600 hover:text-blue-400">Edit</a>
-                                    <a href="#" class="ml-8 text-red-600 hover:text-red-400">Edit</a>
+                                    <form action="{{ route('admin.botchat.delete', $chat->id) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full">Delete</button>
+                                    </form>
                                     </td>
                                 </tr>
                             @endforeach

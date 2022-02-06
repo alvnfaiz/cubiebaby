@@ -1,7 +1,6 @@
 const { default: axios } = require('axios');
 
 require('./bootstrap');
-
 // // const messages_el = document.getElementById('messages');
 // // const username_input = document.getElementById('user_id');
 // // const message_input = document.getElementById('message_input');

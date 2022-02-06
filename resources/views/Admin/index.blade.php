@@ -79,12 +79,12 @@
                                 </tr>
                             </thead>
                             <tbody class="text-sm divide-y divide-gray-100">
-                                @foreach($User as $pelanggan)
+                                @foreach($listOrder as $orderan)
                                 <tr>
                                     <td class="p-2 whitespace-nowrap">
                                         <div class="flex items-center">
-                                            <div class="font-medium text-gray-800">{{ $pelanggan->username }}</div>
-                                            <div class="text-sx">{{ $pelanggan->email }}</div>
+                                            <div class="font-medium text-gray-800">{{ $orderan->detail->first() }}</div>
+                                            <div class="text-sx">{{ $orderan->detail->first()->user }}</div>
                                         </div>
                                     </td>
                                     <td class="p-2 whitespace-nowrap">
