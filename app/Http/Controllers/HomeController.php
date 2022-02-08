@@ -78,6 +78,14 @@ class HomeController extends Controller
         return view('cart', compact('message', 'cart_count', 'cart','total_price', 'shipping', 'category'));
     }
 
+    public function caraBelanja(Request $request){
+        $id = isset(auth()->user()->id)?auth()->user()->id:0;
+        $message = $this->getMessageCount($id);
+        $category = Category::all();
+        $cart_count = $this->getCartCount($id);
+        return view('cara-belanja', compact('message', 'cart_count', 'category'));
+    }
+
     public function addCart(Request $request){
         $id = isset(auth()->user()->id)?auth()->user()->id:0;
         $message = $this->getMessageCount($id);

@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container px-10 py-6 mx-auto mt-20 bg-white">
-        <h2 class="text-2xl font-medium text-center text-blue-600">Buat Kategori</h2>
+        <h2 class="text-2xl font-medium text-center text-blue-600">Buat Banner</h2>
         <div class="mt-10">
             <div>
                 <div class="mt-5 md:mt-0 md:col-span-2">
@@ -38,7 +38,7 @@
                                             Text
                                         </label>
                                         <div class="flex mt-1 shadow-sm">
-                                            <input value="{{ old('alt_text') }}" type="text" name="alt_text" id="alt_text" class="flex-1 block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Nama Kategori">
+                                            <input value="{{ old('alt_text') }}" type="text" name="alt_text" id="alt_text" class="flex-1 block w-full border border-gray-600 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2" placeholder="">
                                         </div>
                                     </div>
                                 </div>

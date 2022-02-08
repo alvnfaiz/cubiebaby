@@ -3,17 +3,28 @@
 <head>
     <meta charset="utf-8">
     <title>@yield('title')</title>
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
     <script src="https://cdn.tailwindcss.com"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}?v=asdaoksdn">
     <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
+        .print{
+            display: none;
+        }
+        .print-woi{
+            display: none;
+        }
         @media print{
             .no-print{
                 display: none;
+            }
+            .print{
+                display: block;
+            }
+            .print-woi{
+                display: flex;
             }
         }
     </style>

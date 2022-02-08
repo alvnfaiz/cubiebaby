@@ -179,3 +179,6 @@ Route::post('/api/cart/destroy', [HomeController::class, 'apiDestroyCart'])->nam
 Route::post('/api/cart/update', [HomeController::class, 'apiUpdateCart'])->name('api.cart.update');
 //api cart ship
 Route::post('/api/cart/ship', [HomeController::class, 'apiCostUpdate'])->name('api.cart.ship');
+
+
+Route::get('cara-belanja', [HomeController::class, 'caraBelanja'])->name('cara-belanja');

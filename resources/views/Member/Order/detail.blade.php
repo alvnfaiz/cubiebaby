@@ -74,7 +74,7 @@
                 <span>Silahkan Transfer Pembayaran Kamu kesini</span>
                 <div class="flex flex-col mt-4">
                     <span class="text-blue-500">BRI</span>
-                    <span class="text-md font-bold text-blue-500">5436 </span>
+                    <span class="text-md font-bold text-blue-500">543601009704534 </span>
                     <span class=" text-gray-700">a\n Alvin Faiz Zulfitri</span>
                 </div>
                 <form method="POST" action="{{ route('member.order.update', $order->id) }}" enctype="multipart/form-data">

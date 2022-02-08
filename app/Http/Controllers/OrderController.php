@@ -149,7 +149,7 @@ class OrderController extends Controller
     public function insertMedia(Request $request){
         $id = Auth::user()->id;
         $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:4096',
         ]);
   
         $data = $request->file('image')->store('bp');

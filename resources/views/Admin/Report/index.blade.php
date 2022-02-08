@@ -3,7 +3,7 @@
 @section('content')
     <div class="container mx-auto mt-10">
         <div class="flex flex-col space-x-4">
-            <div class="text-md">Laporan Penjualan Dari Tanggal</div>
+            <div class="text-md no-print">Laporan Penjualan Dari Tanggal</div>
             <form id="submit" class="no-print" method="POST" action="{{ route('admin.report.get') }}">
                 @csrf
                 <div class="flex items-center">
@@ -35,7 +35,9 @@
             <div id="print">
                 <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                     <h1 class="text-center text-2xl">Laporan Cubie Baby</h1>
-                    <span> Dari Tanggal : {{ $startDate }} s/d {{ $endDate }}</span>
+                    <h4 class="text-center text-sm print mb-20">Jln Ketmumanggungan, Pasar papan Batusangkar</h4>
+
+                    <span class=""> Dari Tanggal : {{ $startDate }} s/d {{ $endDate }}</span>
                     <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
                         <table class="min-w-full leading-normal">
                             <thead>
@@ -114,6 +116,23 @@
                             </tbody>
                             
                         </table>
+
+                        <div class="flex justify-between mt-20 print">
+                            <div class="w-1/3">
+                                
+                            </div>
+                            <div class="w-1/3">
+                                
+                            </div>
+                            <div class="w-1/3 flex-col print-woi">
+                                <span class="text-gray-600 mb-40">
+                                    Batusangkar, {{ now()->format('d F Y') }}
+
+                                </span>
+                                <span class="text-gray-600">
+                                    Cubie Baby
+                                </span>
+                            </div>
 
                     </div>
                 </div>

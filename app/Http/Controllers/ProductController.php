@@ -77,7 +77,7 @@ class ProductController extends Controller
             'stock' => 'required',
             'id_category' => 'required',
             'status' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
 
         $imageName = time().'.'.$request->image->extension();  
@@ -106,7 +106,7 @@ class ProductController extends Controller
             'stock' => 'required',
             'id_category' => 'required',
             'status' => 'required',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
 
         if($request->hasFile('image')){ 

@@ -38,7 +38,7 @@
                                 </svg>
                             </button>
                             <input id="{{ $barang->product->id }}" onchange="update({{ $barang->product->id }})"
-                                class="mx-2 border text-center w-8" type="text" value="{{ $barang->total_product }}">
+                                class="mx-2 border text-center w-12" type="text" value="{{ $barang->total_product }}">
                             <button type="submit" class="w-4 h-8" onclick="add({{ $barang->product->id }})">
                                 <svg class="fill-current text-gray-600 w-4" viewBox="0 0 448 512">
                                     <path

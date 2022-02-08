@@ -35,7 +35,7 @@ class BroadcastController extends Controller
         //foreach checkbock receiver
         $this->validate($request, [
             'value' => 'required|string',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
 
         $image = null;

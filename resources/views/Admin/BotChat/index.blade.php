@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container mx-auto mt-20">
-        <a href="{{  route('admin.botchat.create') }}"><button class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-sky-600">Tambah Ongkir</button></a>
+        <a href="{{  route('admin.botchat.create') }}"><button class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-sky-600">Tambah Botchat</button></a>
             <div class="flex flex-col mt-6">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                   <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">

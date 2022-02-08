@@ -2,11 +2,14 @@
 
 @section('content')
 <div class="flex flex-col container mx-auto bg-white mt-6">
-    <div class="w-full flex flex-row">
-        <div class="flex flex-col m-6">
+    <div class="w-full flex flex-row m-6">
+        <div class="flex flex-col mr-12">
             <span>{{ $order->destination->name }}</span>
             <span>{{ $order->destination->phone }}</span>
             <span>{{ $order->destination->address }}</span>
+        </div>
+        <div class="w-96">
+            <img src="{{ asset('storage/'.$order->image) }}" alt="">
         </div>
     </div>
     <div class="flex shadow-md my-10">
