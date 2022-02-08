@@ -7,6 +7,7 @@ use App\Models\Banner;
 use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class BannersController extends Controller
 {
@@ -50,13 +51,11 @@ class BannersController extends Controller
         $message = $this->getMessageCount($id);
         $inbox = $this->getInboxCount($id);
         $banner = Banner::where('id', $request->id)->first();
+        // \dd($banner);
         return view('Admin.banner.edit', compact('banner', 'message', 'inbox'));
     }
 
     public function update(Request $request){
-        $this->validate($request, [
-            'name' => 'required|string|max:255',
-        ]);
         $banner = Banner::find($request->id);
         if($request->hasFile('image')){ 
             $oldImage = Banner::find($request->id);
@@ -70,7 +69,7 @@ class BannersController extends Controller
         return redirect()->route('admin.banner.index');
     }
 
-    public function destroy(Request $request){
+    public function delete(Request $request){
         $banner = Banner::find($request->id);
         $banner->delete();
         return redirect()->route('admin.banner.index');

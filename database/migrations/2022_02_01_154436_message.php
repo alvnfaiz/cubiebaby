@@ -17,9 +17,9 @@ class Message extends Migration
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('image')->nullable();
-            $table->string('message');
+            $table->string('message')->nullable();
             $table->boolean('read')->default(false);
             $table->boolean('admin')->default(false);
             $table->timestamp('created_at')->useCurrent();

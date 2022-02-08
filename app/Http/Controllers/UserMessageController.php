@@ -39,7 +39,7 @@ class UserMessageController extends Controller
         $message = Message::create([
             'user_id' => Auth::user()->id,
             'image' => $image,
-            'message' => $request->message,
+            'message' => $request->message?:null,
             'read' => false,
             'admin' => false,
         ]);

@@ -52,9 +52,9 @@ class User extends Authenticatable
         return $this->hasMany(Message::class, 'user_id');
     }
 
-    public function user_activity()
+    public function activity()
     {
-        return $this->belongsTo(UserActivity::class, 'user_id');
+        return $this->belongsTo(UserActivity::class);
     }
 }
 

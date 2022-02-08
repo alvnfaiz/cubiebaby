@@ -84,6 +84,9 @@
                                     {{ number_format($ship->cost, 2, ',', '.') }}</option>
                             @endforeach
                         </select>
+                        @error('shipping_id')
+                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     <div class="border-t mt-8">
@@ -93,10 +96,19 @@
                         </div>
                         <input type="text" name="name" class="block p-2 text-gray-600 w-full text-sm"
                             placeholder="Nama Penerima" required value="{{ old('name') }}">
+                            @error('name')
+                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
                         <input type="text" name="phone" class="block p-2 text-gray-600 w-full text-sm"
                             placeholder="Nomor Telepon" required value="{{ old('phone') }}">
+                            @error('phone')
+                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                        @enderror
                         <input type="text" name="address" class="block p-2 text-gray-600 w-full text-sm"
                             placeholder="Alamat Lengkap" required value="{{ old('address') }}">
+                            @error('address')
+                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                        @enderror
 
                         <button type="submit"
                             class="bg-red-500 hover:bg-red-600 px-5 py-2 text-sm text-white uppercase">Checkout</button>

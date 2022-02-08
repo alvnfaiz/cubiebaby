@@ -70,39 +70,68 @@
                 integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
         <script>
+            $('#upload-image').click(function() {
+                $('#image').trigger('click')
+            });
+
             function sendMessageAjaX() {
-                $.ajax({
-                    url: '{{ route('admin.message.send') }}',
-                    type: 'POST',
-                    headers: {
-                        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: {
-                        message: $('#message').val(),
-                        user_id: $('#message').attr('aria-id'),
-                    },
-                    success: function(data) {
-                        console.log(data);
-                        if (data.image != null) {
+                if ($('#image').val() != '') {
+                    //maka ajax
+                    var fd = new FormData();
+                    fd.append('message', $('#message').val());
+                    //fd.append('user_id', from attribute aria-id
+                    fd.append('user_id', $('#message').attr('aria-id'));
+                    fd.append('image', $('#image')[0].files[0]);
+                    $.ajax({
+                        url: '{{ route('message.send') }}',
+                        type: 'POST',
+                        data: fd,
+                        contentType: false,
+                        processData: false,
+                        success: function(data) {
+                            console.log(data);
+                            //maka append ke chat
                             $('#chat').append(
-                                '<div class="w-full flex justify-end p-3">' +
-                                '<img src="' + data.image + '" class="w-64">' +
-                                '<div class="bg-gray-100 border-r-4 border-gray-500 text-gray-700 p-4 mr-3 rounded-l-lg">' +
-                                '<p class="text-sm">' + data.message + '</p>' +
-                                '</div>' +
+                                '<div class="w-full flex justify-end p-3"><div class="flex flex-col">' +
+                                '<img src="/storage/' + data.image + ' " class="w-64">' +
+                                '<div class="bg-gray-100 border-r-4 border-gray-500 text-gray-700 p-4 ml-3 rounded-l-lg">' +
+                                '<p class="text-sm" id="' + data.id + '">' + data.message + '</p>' +
+                                '</div></div>' +
                                 '</div>'
                             );
-                        } else {
-                            $('#chat').append(
-                                '<div class="w-full flex justify-end p-3">' +
-                                '<div class="bg-gray-100 border-r-4 border-gray-500 text-gray-700 p-4 mr-3 rounded-l-lg">' +
-                                '<p class="text-sm">' + data.message + '</p>' +
-                                '</div>' +
-                                '</div>'
-                            );
+                            //maka kosongkan image
+                            $('#image').val('');
                         }
-                    }
-                });
+                    });
+                } else {
+                    $.ajax({
+                        url: '{{ route('message.send') }}',
+                        type: 'POST',
+                        headers: {
+                            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            message: $('#message').val(),
+                            user_id: $('#message').attr('aria-id'),
+                            image: $('#image').val(),
+                        },
+                        success: function(data) {
+                            console.log(data);
+                            //scroll to bottom #chat
+
+                            $('#chat').append(
+                                '<div class="w-full flex justify-end p-3">' +
+                                '<div class="bg-gray-100 border-r-4 border-gray-500 text-gray-700 p-4 ml-3 rounded-l-lg">' +
+                                '<p class="text-sm" id="' + data.id + '">' + data.message + '</p>' +
+                                '</div>' +
+                                '</div>'
+                            );
+                            $("#chat").animate({
+                                scrollTop: $("#" + data.id).position().top
+                            }, 1000);
+                        }
+                    });
+                }
             }
             $('#message').keydown(function(e) {
                 if (e.keyCode == 13) {
@@ -146,7 +175,8 @@
                                         '<div class="w-full flex justify-end p-3"><div class="flex flex-col">' +
                                         '<img src="/storage/' + value.image + '" class="w-64">' +
                                         '<div class="bg-gray-100 border-l-4 border-gray-500 text-gray-700 p-4 mr-3 rounded-l-lg">' +
-                                        '<p class="text-sm" id="' + value.id + '">' + value.message + '</p>' +
+                                        '<p class="text-sm" id="' + value.id + '">' + value.message +
+                                        '</p>' +
                                         '</div></div>' +
                                         '</div>'
                                     );

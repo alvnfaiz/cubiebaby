@@ -103,7 +103,7 @@
                     img = "storage/" + data.image ;
                     $('#chat').append(
                         '<div class="w-full flex justify-end p-3"><div class="flex flex-col">'+
-                            '<img src=" '+ img +' " class="w-64">'+
+                            '<img src="/storage/ '+ data.image +' " class="w-64">'+
                             '<div class="bg-gray-100 border-r-4 border-gray-500 text-gray-700 p-4 ml-3 rounded-l-lg">'+
                                 '<p class="text-sm" id="' + data.id + '">'+data.message+'</p>'+
                             '</div></div>'+

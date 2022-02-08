@@ -42,7 +42,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-span-3 sm:col-span-2">
+                                <div class="col-span-3 sm:col-span-2 flex flex-col">
                                     <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
                                     <input type="radio" value="active" name="status" @if(old('status') == 'active') checked @endif>
                                     <label for="active" class="ml-2">Active</label>

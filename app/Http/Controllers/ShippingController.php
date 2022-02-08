@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Message;
+use App\Models\Category;
 use App\Models\Shipping;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -43,11 +44,11 @@ class ShippingController extends Controller
 
     public function edit(Request $request){
         $id = Auth::user()->id;
-        
+        $category = Category::all();
         $message = $this->getMessageCount($id);
         $inbox = $this->getInboxCount($id);
         $shipping = Shipping::where('id', $request->id)->first();
-        return view('Admin.shipping.edit', compact('shipping', 'message', 'inbox'));
+        return view('Admin.shipping.edit', compact('shipping', 'message', 'inbox', 'category'));
     }
 
     public function update(Request $request){

@@ -81,6 +81,12 @@ class OrderController extends Controller
 
 
     public function store(Request $request){
+        $request->validate([
+            'name' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+            'shipping_id' => 'required',
+        ]);
         $id = Auth::user()->id;
         $cart = Cart::where('user_id', $id)->get();
         $total_price = $this->getTotalPrice();
@@ -127,11 +133,11 @@ class OrderController extends Controller
 
     public function index(){
         $id = Auth::user()->id;
-        
+        $category = Category::all();
         $message = $this->getMessageCount($id);
         $cart_count = $this->getCartCount($id);
         $orders = Order::where('user_id', $id)->get();
-        return view('member.order.index', compact('orders', 'message', 'cart_count'));
+        return view('member.order.index', compact('orders', 'message', 'cart_count', 'category'));
     }
 
     public function detail(Request $request){

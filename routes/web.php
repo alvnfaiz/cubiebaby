@@ -87,6 +87,15 @@ Route::middleware('pegawai')->prefix('/admin')->name('admin.')->group(function()
         // Route::post(''
     });
 
+    Route::post('/report/get', [ReportController::class, 'getReport'])->name('report.get');
+    Route::prefix('/report')->name('report.')->group(function(){      
+        Route::get('/', [ReportController::class, 'index'])->name('index');
+        Route::get('/member', [ReportController::class, 'member'])->name('member');
+        Route::get('/sale', [ReportController::class, 'sale'])->name('sale');
+        Route::get('/pdf', [ReportController::class, 'createPDF'])->name('pdf');
+        
+    });
+
 });
 
 //Admin Area
@@ -100,14 +109,9 @@ Route::middleware('admin')->prefix('')->name('admin.')->group(function(){
     //     Route::post('/{id}/delete', [PegawaiController::class, 'delete'])->name('delete');
     // });
     Route::post('/username', [AdminController::class, 'username'])->name('username');
-    Route::post('/report/get', [ReportController::class, 'getReport'])->name('report.get');
-    Route::prefix('/report')->name('report.')->group(function(){      
-        Route::get('/', [ReportController::class, 'index'])->name('index');
-        Route::get('/member', [ReportController::class, 'member'])->name('member');
-        Route::get('/sale', [ReportController::class, 'sale'])->name('sale');
-        Route::get('/pdf', [ReportController::class, 'createPDF'])->name('pdf');
-        
-    });
+    
+    Route::get('/member', [MemberController::class, 'memberList'])->name('member.list');
+    Route::post('/member/{id}/delete', [MemberController::class, 'destroy'])->name('delete.member');
 
     // shipping
     Route::prefix('/shipping')->name('shipping.')->group(function(){
@@ -148,6 +152,7 @@ Route::middleware('admin')->prefix('')->name('admin.')->group(function(){
 
 //Member Area
 Route::get('/profile', [MemberController::class, 'index'])->middleware('member')->name('member.profile');
+Route::put('/profile', [MemberController::class, 'update'])->middleware('member')->name('member.profile.update');
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/home', [HomeController::class, 'index']);
 Route::get('/message', [UserMessageController::class, 'index'])->middleware('member')->name('message');
@@ -170,7 +175,8 @@ Route::get('/cart', [HomeController::class, 'cart'])->name('cart');
 
 //destroy cart
 Route::post('/cart/{id}/delete', [HomeController::class, 'destroyCart'])->name('cart.destroy');
-Route::post('/add', [HomeController::class, 'addCart'])->name('buy.add');
+Route::post('/add', [HomeController::class, 'addBuy'])->name('buy.add');
+Route::post('/cart/add', [HomeController::class, 'addCart'])->name('cart.add');
 
 //api to add cart
 Route::get('/api/cart', [HomeController::class, 'apiCart'])->name('api.cart');

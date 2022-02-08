@@ -134,14 +134,14 @@
 
                             <li>
                                 <a href="{{ route('member.profile') }}"
-                                    class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-700 hover:text-white">Profile</a>
+                                    class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-700 hover:text-white">Edit Profile</a>
                             </li>
                             <li>
                                 <a href="{{ route('message') }}"
                                     class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-700 hover:text-white">Message</a>
                             </li>
                             <li>
-                                <a href="#"
+                                <a href="{{ route('member.order.index') }}"
                                     class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-700 hover:text-white">Order
                                     History</a>
                             </li>

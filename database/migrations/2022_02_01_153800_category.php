@@ -14,7 +14,7 @@ class Category extends Migration
     public function up()
     {
         Schema::create('category', function (Blueprint $table) {
-            $table->id('id')->onDelete('cascade');
+            $table->id('id');
             $table->string('name');
             $table->string('slug')->unique();
         });

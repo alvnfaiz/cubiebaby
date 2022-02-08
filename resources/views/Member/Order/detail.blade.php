@@ -57,6 +57,7 @@
                     <span class="block p-2 text-gray-600 w-full text-sm">
                         {{ $order->shipping->city }}
                     </span>
+                    
                 </div>
 
                 <div class="border-t mt-8">
@@ -86,7 +87,7 @@
                                 <label for="image"
                                     class="relative font-medium text-indigo-600 bg-white rounded-md cursor-pointer hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
                                     <span>Upload Bukti Pembayaran</span>
-                                    <input id="image" name="image" type="file" accept="image/png, image/jpeg">
+                                    <input id="image" name="image" type="file" accept="image/*">
                                 </label>
                             </div>
                             <p class="text-xs text-gray-500">

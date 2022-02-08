@@ -28,7 +28,7 @@ class HomeController extends Controller
         $products = Product::latest();
         $id = isset(auth()->user()->id)?auth()->user()->id:0;
         //get Latest 3 banner from Banner table
-        $banners = Banner::where('status', 'active')->take(3)->get();
+        $banners = Banner::where('status', 'active')->orderBy('id', 'desc')->take(3)->get();
         //get all category
         $category = $this->category;
         $message = $this->getMessageCount($id);
@@ -51,7 +51,8 @@ class HomeController extends Controller
         $category = $this->category;
         $cart_count = $this->getCartCount($id);
         $barang = Product::where('id', $request->id)->first();
-        return view('product', compact('barang', 'message', 'cart_count', 'category'));
+        $barangs = Product::where('id_category', $barang->id_category)->orderBy('id', 'desc')->take(5)->get();
+        return view('product', compact('barang', 'message', 'cart_count', 'category', 'barangs'));
 
     }
 
@@ -87,6 +88,43 @@ class HomeController extends Controller
     }
 
     public function addCart(Request $request){
+        $id = isset(auth()->user()->id)?auth()->user()->id:0;
+        $message = $this->getMessageCount($id);
+        
+        $cart_count = $this->getCartCount($id);
+        //if id =0 save cart in cache
+        if($id == 0){
+            $cart = \Cache::get('cart');
+            if(!$cart){
+                $cart = [];
+            }
+            //if cart exist in cache, add product by 1
+            if(array_key_exists($request->id, $cart)){
+                $cart[$request->id] += 1;
+            }else{
+                $cart[$request->id] = 1;
+            }
+            Cache::forever('cart', $cart);
+            return redirect()->route('login');
+        }else{
+            $cart = Cart::where('user_id', $id)
+                ->where('product_id', $request->id)
+                ->first();
+            if($cart){
+                $cart->total_product += 1;
+                $cart->save();
+            }else{
+                Cart::create([
+                    'user_id' => $id,
+                    'product_id' => $request->id,
+                    'total_product' => 1,
+                ]);
+            }
+        }
+        return redirect()->back();
+    }
+
+    public function addBuy(Request $request){
         $id = isset(auth()->user()->id)?auth()->user()->id:0;
         $message = $this->getMessageCount($id);
         

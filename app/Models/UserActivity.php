@@ -18,10 +18,12 @@ class UserActivity extends Model
 
     //disable timestamps
     public $timestamps = false;
+    //primary key user_id
+    protected $primaryKey = 'user_id';
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, $user_id);
     }
 
 }

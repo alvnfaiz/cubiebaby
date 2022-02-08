@@ -17,7 +17,7 @@ class CreateBroadcastRecipientsTable extends Migration
             $table->unsignedBigInteger('broadcast_id');
             $table->unsignedBigInteger('user_id');
             $table->foreign('broadcast_id')->references('id')->on('broadcasts');
-            $table->foreign('user_id')->references('id')->on('users'); 
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

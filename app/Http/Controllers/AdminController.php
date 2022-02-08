@@ -77,10 +77,6 @@ class AdminController extends Controller
     }
 
 
-    public function settingsForm(){
-        return view('admin.setting');
-    }
-
     public function settings(){
 
     }
