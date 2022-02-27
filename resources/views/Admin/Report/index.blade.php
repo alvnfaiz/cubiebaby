@@ -34,7 +34,7 @@
             </div>
             <div id="print">
                 <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-                    <h1 class="text-center text-2xl">Laporan Cubie Baby</h1>
+                    <h1 class="text-center text-2xl">Laporan Penjualan Cubie Baby</h1>
                     <h4 class="text-center text-sm print mb-20">Jln Ketmumanggungan, Pasar papan Batusangkar</h4>
 
                     <span class=""> Dari Tanggal : {{ $startDate }} s/d {{ $endDate }}</span>

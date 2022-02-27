@@ -84,10 +84,13 @@ class MemberController extends Controller
 
         if($request->new_password){
             $request->validate([
-                'password' => ['required', new MatchOldPassword],
+                'password' => ['required', 'string', 'min:6'],
                 'new_password' => 'required|string|min:6',
-                'confirm_password' => 'same:enw_password'
+                'confirm_password' => 'same:new_password'
             ]);
+            if(!(password_verify($request->password, $user->password))){
+                return redirect()->back()->with('error', 'Password lama salah');
+            }
         }
         $user->username = $request->username;
         $user->email = $request->email;
@@ -100,7 +103,7 @@ class MemberController extends Controller
         $user->gender = $request->gender;
         $user->updated_at = now();
         $user->save();
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Data berhasil di update');
     }
 
     protected function getCartCount($id = 0){

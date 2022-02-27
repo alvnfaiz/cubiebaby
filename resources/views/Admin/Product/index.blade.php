@@ -43,6 +43,7 @@
                     </td>
                     <td class="p-2 whitespace-nowrap">
                         <div class="text-left">{{ $barang->category->name }}</div>
+                        <div class="text-left">{{ $barang->status }}</div>
                     </td>
                     <td class="p-2 whitespace-nowrap">
                         <div class="text-left font-medium text-red-500">Rp. {{ $barang->price }} </div><div class="text-left font-medium text-green-500">Rp. {{ $barang->capital }}</div>

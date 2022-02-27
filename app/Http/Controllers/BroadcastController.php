@@ -36,6 +36,7 @@ class BroadcastController extends Controller
         $this->validate($request, [
             'value' => 'required|string',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'receiver' => 'required',
         ]);
 
         $image = null;

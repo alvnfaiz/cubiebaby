@@ -3,7 +3,7 @@
 @section('title', 'Login | CubieBaby')
 
 @section('content')
-    <div class="container mx-auto mt-20">
+    <div class="container mx-auto my-20">
         <div class="w-full md:w-4/12 bg-white rounded-lg mx-auto p-10 shadow-2xl">
             <h1 class="text-2xl font-semibold text-blue-500 text-center">Login</h1>
             <form class="mt-10 flex flex-col" method="POST">

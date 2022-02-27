@@ -104,7 +104,7 @@ class OrderController extends Controller
             'total' => $cart->sum('total'),
             'status_payment' => 'Belum Lunas',
             'shipping_status' => 'Diproses',
-            'resi_number' => '',
+            'resi_number' => $request->resi_number,
             'order_status' => 'Proses',
             'image' => '',
             'shipping_id' => $request->shipping_id,

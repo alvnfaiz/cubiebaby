@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container px-10 py-6 mx-auto mt-20 bg-white">
-        <h2 class="text-2xl font-medium text-center text-blue-600">Buat Broadcast</h2>
+        <h2 class="text-2xl font-medium text-center text-blue-600">Buat Pesan Broadcast</h2>
         <div class="mt-10">
             <div>
                 <div class="mt-5 md:mt-0 md:col-span-2">
@@ -35,7 +35,7 @@
                                 <div class="grid grid-cols-3 gap-6">
                                     <div class="col-span-3 sm:col-span-2">
                                         <label for="value" class="block text-sm font-medium text-gray-700">
-                                            Balasan
+                                            Pesan Broadcast
                                         </label>
                                         <div class="flex mt-1 shadow-sm">
                                             <textarea name="value" id="editor">
@@ -62,7 +62,7 @@
                                             {{-- <input type="checkbox" name="receiver[]" id="receiver-0" value="0" class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out">
                                             <label for="0" class="ml-2">Pelanggan Potensial</label> --}}
                                         </div>
-                                        @error('user_id')
+                                        @error('receiver')
                                             <p class="mt-2 text-xs italic text-red-500">{{ $message }}</p>
                                         @enderror
 

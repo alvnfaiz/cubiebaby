@@ -25,7 +25,7 @@ class HomeController extends Controller
     }
 
     public function index(){
-        $products = Product::latest();
+        $products = Product::latest()->where('status', 'Available');
         $id = isset(auth()->user()->id)?auth()->user()->id:0;
         //get Latest 3 banner from Banner table
         $banners = Banner::where('status', 'active')->orderBy('id', 'desc')->take(3)->get();
@@ -36,6 +36,7 @@ class HomeController extends Controller
         if(request('search')){
             $products = $products
             ->where('name', 'like', '%'.request('search').'%')
+            ->where('status', 'Available')
             ->orWhere('deskripsi', 'like', '%'.request('search').'%')
             ->orWhereHas('category', function($query){
                 $query->where('name', 'like', '%'.request('search').'%');

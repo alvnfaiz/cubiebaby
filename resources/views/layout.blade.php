@@ -25,10 +25,6 @@
                             class="p-4 font-semibold text-sky-500 hover:bg-sky-500 hover:text-white">
                             Home
                         </a>
-                        <a href="{{ route('home') }}"
-                            class="p-4 font-semibold text-sky-500 hover:bg-sky-500 hover:text-white">
-                            About
-                        </a>
                         <a href="{{ route('cara-belanja') }}"
                             class="p-4 font-semibold text-sky-500 hover:bg-sky-500 hover:text-white">
                             Cara Pemesanan

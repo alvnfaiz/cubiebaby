@@ -9,24 +9,24 @@
             <form class="mt-10 flex flex-col" method="POST">
                 @csrf
                 <label for="email" class="text-sm font-medium text-gray-700 mt-4">Email</label>
-                <input type="email" name="email" placeholder="Email@email.com" class="border border-gray-400 rounded p-2" required value="{{ old('email') }}">
+                <input type="email" name="email" placeholder="Email@email.com" class="border border-gray-400 rounded p-2" required autocomplete="off" value="{{ old('email') }}">
                 @error('email')
                     <span class="text-red-500 text-sm">{{ $message }}</span>
                 @enderror
                 <label for="username" class="text-sm font-medium text-gray-700 mt-4">Username</label>
-                <input type="text" name="username" placeholder="Username" class="border border-gray-400 rounded p-2" required value="{{ old('username') }}">
+                <input type="text" name="username" placeholder="Username" class="border border-gray-400 rounded p-2" required autocomplete="off" value="{{ old('username') }}">
                 @error('username')
                     <span class="text-red-500 text-sm">{{ $message }}</span>
                 @enderror
 
                     <label for="phone_number" class="text-sm font-medium text-gray-700 mt-4">Phone Number</label>
-                    <input type="text" name="phone_number" placeholder="+62xxx xxxx xxxx" class="border border-gray-400 rounded p-2" required value="{{ old('phone_number') }}">
+                    <input type="text" name="phone_number" placeholder="+62xxx xxxx xxxx" class="border border-gray-400 rounded p-2" required autocomplete="off" value="{{ old('phone_number') }}">
                     @error('phone_number')
                         <span class="text-red-500 text-sm">{{ $message }}</span>
                     @enderror
 
                     <label for="birth_date" class="text-sm font-medium text-gray-700 mt-4">Tanggal Lahir</label>
-                    <input type="date" max="{{ now() }}" name="birth_date" class="border border-gray-400 rounded p-2" required value="{{ old('birth_date') }}">
+                    <input type="date" max="{{ now() }}" name="birth_date" class="border border-gray-400 rounded p-2" required autocomplete="off" value="{{ old('birth_date') }}">
                     @error('birth_date')
                         <span class="text-red-500 text-sm">{{ $message }}</span>
                     @enderror
@@ -42,18 +42,18 @@
                     @enderror
                 </div>
                     <label for="password" class="block text-sm font-medium text-gray-700 mt-4">Password</label>
-                    <input type="password" name="password" placeholder="Password" class="border border-gray-400 rounded p-2" required>
+                    <input type="password" name="password" placeholder="Password" class="border border-gray-400 rounded p-2" required autocomplete="off">
                     @error('password')
                         <span class="text-red-500 text-sm">{{ $message }}</span>
                     @enderror
                 
                     <label for="password_confirmation" class="block text-sm font-medium text-gray-700 mt-4">Confirm Password</label>
-                    <input type="password" name="password_confirmation" placeholder="Confirm Password" class="border border-gray-400 rounded p-2" required>
+                    <input type="password" name="password_confirmation" placeholder="Confirm Password" class="border border-gray-400 rounded p-2" required autocomplete="off">
                     @error('password_confirmation')
                         <span class="text-red-500 text-sm">{{ $message }}</span>
                     @enderror
                 <label for="address" class="block text-sm font-medium text-gray-700 mt-4">Kota Asal</label>
-                <input type="text" name="address" placeholder="Kota Tinggal" class="border border-gray-400 rounded p-2" required value="{{ old('address') }}">
+                <input type="text" name="address" placeholder="Kota Tinggal" class="border border-gray-400 rounded p-2" required autocomplete="off" value="{{ old('address') }}">
                 @error('email')
                     <span class="text-red-500 text-sm">{{ $message }}</span>
                 @enderror

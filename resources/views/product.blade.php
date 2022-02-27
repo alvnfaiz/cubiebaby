@@ -21,15 +21,15 @@
                         <form action="{{ route('buy.add') }}" method="POST">
                             @csrf
                             <input type="hidden" name="id" value="{{ $barang->id }}">
-                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                Add to Cart
+                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-32">
+                                Beli
                             </button>
                         </form>
                         <form action="{{ route('cart.add') }}" method="POST">
                             @csrf
                             <input type="hidden" name="id" value="{{ $barang->id }}">
-                            <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                                Beli
+                            <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-32 mt-4   ">
+                               Add cart
                             </button>
                         </form>
                     </div>

@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container px-10 py-6 mx-auto mt-20 bg-white">
-        <h2 class="text-2xl font-medium text-center text-blue-600">Buat Kota</h2>
+        <h2 class="text-2xl font-medium text-center text-blue-600">Input Ongkos Kirim</h2>
         <div class="mt-10">
             <div>
                 <div class="mt-5 md:mt-0 md:col-span-2">

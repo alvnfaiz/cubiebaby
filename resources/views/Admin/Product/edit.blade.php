@@ -5,6 +5,7 @@
         <h2 class="text-2xl font-medium text-center text-blue-600">Tambah Produk</h2>
         <div class="mt-10">
             <div>
+                
                 <div class="mt-5 md:mt-0 md:col-span-2">
                     <form action="{{ route('admin.product.update', $product->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
@@ -78,7 +79,7 @@
                                         <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
                                         <input type="radio" value="Available" name="status" @if(old('status', $product->status) == 'Available') checked @endif>
                                         <label for="status" class="ml-2">Available</label>
-                                        <input type="radio" value="Unvailable" name="status" @if(old('status', $product->status) == 'Unavailable') checked @endif>
+                                        <input type="radio" value="Unavailable" name="status" @if(old('status', $product->status) == 'Unavailable') checked @endif>
                                         <label for="status" class="ml-2">Unvailable</label>
                                         @error('status')
                                             <p class="mt-2 text-xs italic text-red-500">{{ $message }}</p>

@@ -50,6 +50,7 @@ class ProductController extends Controller
         if(request('search')){
             $product = $product
             ->where('name', 'like', '%'.request('search').'%')
+            ->where('status', 'Available')
             ->orWhere('deskripsi', 'like', '%'.request('search').'%')
             ->orWhereHas('category', function($query){
                 $query->where('name', 'like', '%'.request('search').'%');
@@ -93,7 +94,7 @@ class ProductController extends Controller
         $message = $this->getMessageCount($id);
         $inbox = $this->getInboxCount($id);
         $category = Category::all();
-        $product = Product::find($id);
+        $product = Product::find($request->id);
         return view('Admin.Product.edit', compact('product', 'category', 'message', 'inbox'));
     }
 

@@ -6,7 +6,7 @@
             <div class="bg-white p-8 rounded-md w-full">
                 <div class=" flex items-center justify-between pb-6">
                     <div>
-                        <h2 class="text-gray-600 font-semibold">Products Oder</h2>
+                        <h2 class="text-gray-600 font-semibold">Laporan Penjualan Cubiebaby</h2>
                         <span class="text-xs"></span>
                     </div>
                 </div>

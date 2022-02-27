@@ -80,7 +80,7 @@
     @method('put')
     <div class="mb-6">
         <label for="resi_number" class="block mb-2 text-sm font-medium text-gray-900">Nomor Resi</label>
-        <input type="text" id="resi_number" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" value="{{ old('resi_number', $order->resi_number) }}">
+        <input type="text" id="resi_number" name="resi_number" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" value="{{ old('resi_number', $order->resi_number) }}">
       </div>
     <div class="flex items-start mb-6">
         <label for="payment_status" class="block mb-2 text-sm font-medium text-gray-900">Status Pembayaran</label>

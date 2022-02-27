@@ -86,8 +86,8 @@
                                 <tr class="hover:bg-slate-200 cursor-pointer" onclick="location.href='{{route('admin.order.edit', $orderan->id)}}'"">
                                     <td class="p-2 whitespace-nowrap">
                                         <div class="flex flex-col items-center">
-                                            <div class="font-medium text-gray-800">{{ $orderan->user->first()->username }}</div>
-                                            <div class="text-sx">{{ $orderan->user->first()->username }}</div>
+                                            <div class="font-medium text-gray-800">{{ $orderan->user->username }}</div>
+                                            <div class="text-sx">{{ $orderan->user->email }}</div>
                                         </div>
                                     </td>
                                     <td class="p-2 whitespace-nowrap">
